@@ -1,5 +1,6 @@
-package com.phoenix.travelapp.feature_travel.presentation.main_screen
+package com.phoenix.travelapp.feature_ride.presentation.main_screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,16 +18,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.phoenix.travelapp.feature_ride.domain.model.RideEstimateValueResponse
 
 /**
  * A main screen é responsável por fornecer ao usuário a interface de solicitação de viagens.
@@ -36,14 +38,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun MainScreen(
     viewModel: MainScreenViewModel = viewModel(), //Substituir por hiltViewModel()
-    onNavigateToTravelPricesScreen: () -> Unit
+    onNavigateToRidePricingScreen: (List<RideEstimateValueResponse.Option>) -> Unit
 ) {
 
-    var userId by remember { mutableStateOf("") }
-    var originAddress by remember { mutableStateOf("") }
-    var destinationAddress by remember { mutableStateOf("") }
-
-    val priceCalculationState by viewModel.priceCalculationState.collectAsState()
+    var userId by rememberSaveable { mutableStateOf("") }
+    var originAddress by rememberSaveable { mutableStateOf("") }
+    var destinationAddress by rememberSaveable { mutableStateOf("") }
+    val priceCalculationState by viewModel.priceCalculationState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -95,9 +96,11 @@ fun MainScreen(
         )
         Spacer(modifier = Modifier.padding(16.dp))
         FilledTonalButton(
-            onClick = {
-                // Chamar o fetching dos preços usando viewmodel
-         },
+            onClick = { viewModel.fetchRidePrices(
+                customerId = userId,
+                originAddress = originAddress,
+                destinationAddress = destinationAddress
+            ) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp) // Corresponde a altura dos textfields
@@ -128,7 +131,20 @@ fun MainScreen(
                 )
             }
             is PriceCalculationState.Success -> {
-                onNavigateToTravelPricesScreen()
+                val options = (priceCalculationState as PriceCalculationState.Success).rideOptions
+
+                options.fold(
+                    onSuccess = { rideOptions ->
+                        onNavigateToRidePricingScreen(rideOptions)
+                    },
+                    onFailure = { error ->
+                        Log.d("debug", error.message.toString())
+                        Text(
+                            text = "Não há opções de viagem disponíveis.",
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                    }
+                )
             }
         }
     }

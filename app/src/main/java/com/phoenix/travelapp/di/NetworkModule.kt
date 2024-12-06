@@ -1,6 +1,9 @@
 package com.phoenix.travelapp.di
 
-import com.phoenix.travelapp.feature_travel.data.api.TRAVEL_API_BASE_URL
+import com.phoenix.travelapp.feature_ride.data.api.RIDE_API_BASE_URL
+import com.phoenix.travelapp.feature_ride.data.api.RideApiService
+import com.phoenix.travelapp.feature_ride.data.repository.RideApiRepositoryImpl
+import com.phoenix.travelapp.feature_ride.domain.model.ride_api.repository.RideApiRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,9 +33,23 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(TRAVEL_API_BASE_URL)
+            .baseUrl(RIDE_API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRideApiService(retrofit: Retrofit): RideApiService {
+        return retrofit.create(RideApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRideRepository(
+        rideApiService: RideApiService
+    ): RideApiRepository {
+        return RideApiRepositoryImpl(rideApiService)
     }
 }

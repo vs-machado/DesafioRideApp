@@ -12,7 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.phoenix.travelapp.feature_travel.presentation.main_screen.MainScreen
+import androidx.navigation.toRoute
+import com.phoenix.travelapp.feature_ride.domain.model.RideEstimateValueResponse
+import com.phoenix.travelapp.feature_ride.presentation.main_screen.MainScreen
+import com.phoenix.travelapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
 import com.phoenix.travelapp.ui.theme.TravelAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
@@ -38,14 +41,15 @@ class MainActivity : ComponentActivity() {
                         // Tela inicial. Usuário insere o ID de usuário, endereço de origem e destino e solicita o cálculo dos preços da viagem
                         composable<Home> {
                             MainScreen(
-                                onNavigateToTravelPricesScreen = {
-                                    navController.navigate(TravelPrices)
+                                onNavigateToRidePricingScreen = { optionsList ->
+                                    navController.navigate(RidePrices(optionsList))
                                 }
                             )
                         }
-                        // Os preços da viagem são exibidos ao usuário
-                        composable<TravelPrices> {
-                            //TravelPricesScreen()
+                        // Tela onde o preço das viagens são exibidos ao usuário
+                        composable<RidePrices> { backStackEntry ->
+                            val ridePrices: RidePrices = backStackEntry.toRoute()
+                            RidePricesScreen(ridePrices.optionsList)
                         }
                     }
                 }
@@ -57,6 +61,6 @@ class MainActivity : ComponentActivity() {
     object Home
 
     @Serializable
-    object TravelPrices
+    data class RidePrices(val optionsList: List<RideEstimateValueResponse.Option>)
 }
 
