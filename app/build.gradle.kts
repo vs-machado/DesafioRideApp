@@ -60,9 +60,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.retrofit)
-    implementation(libs.google.gson)
+    implementation(libs.logging.interceptor)
 
-    // Hilt dependencies
+    // Dependências Gson
+    implementation(libs.google.gson)
+    implementation(libs.converter.gson)
+
+    // Dependências Gson
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
