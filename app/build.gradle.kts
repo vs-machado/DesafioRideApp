@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
@@ -62,6 +63,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.serialization.core)
 
     // Dependências Gson
     implementation(libs.google.gson)

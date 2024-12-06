@@ -35,7 +35,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
  */
 @Composable
 fun MainScreen(
-    viewModel: MainScreenViewModel = viewModel() //Substituir por hiltViewModel()
+    viewModel: MainScreenViewModel = viewModel(), //Substituir por hiltViewModel()
+    onNavigateToTravelPricesScreen: () -> Unit
 ) {
 
     var userId by remember { mutableStateOf("") }
@@ -127,7 +128,7 @@ fun MainScreen(
                 )
             }
             is PriceCalculationState.Success -> {
-                //onNavigateToTravelOptionsScreen()
+                onNavigateToTravelPricesScreen()
             }
         }
     }
@@ -138,5 +139,5 @@ fun MainScreen(
 @Preview
 @Composable
 fun MainScreenPreview() {
-    MainScreen()
+//    MainScreen()
 }
