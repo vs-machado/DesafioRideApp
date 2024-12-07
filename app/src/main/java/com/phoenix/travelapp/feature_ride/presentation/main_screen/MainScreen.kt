@@ -45,16 +45,18 @@ fun MainScreen(
     var destinationAddress by rememberSaveable { mutableStateOf("") }
     val priceCalculationState by viewModel.priceCalculationState.collectAsStateWithLifecycle()
 
-    // Quando o fetching dos preços da viagem é bem sucedido, salva as opções de viagem no sharedViewModel
-    // e reseta o estado do priceCalculationState.
+    // Quando o fetching dos preços da viagem é bem sucedido e há opções de viagens disponíveis ao usuário,
+    // salva as opções de viagem no sharedViewModel e reseta o estado do priceCalculationState.
     LaunchedEffect(priceCalculationState) {
         if (priceCalculationState is PriceCalculationState.Success) {
             val options = (priceCalculationState as PriceCalculationState.Success).rideOptions
 
             options.fold(
                 onSuccess = { rideOptions ->
-                    viewModel.saveRideOption(rideOptions)
-                    viewModel.resetPriceCalculationState()
+                    if(rideOptions.any { it.name.isNotEmpty() }){
+                        viewModel.saveRideOption(rideOptions)
+                        viewModel.resetPriceCalculationState()
+                    }
                 },
                 onFailure = { error ->
                     Log.d("debug", error.message.toString())
@@ -152,10 +154,17 @@ fun MainScreen(
                 val options = (priceCalculationState as PriceCalculationState.Success).rideOptions
 
                 options.fold(
-                    // Navega para RidePricesScreen quando o fetching é bem sucedido.
+                    // Navega para RidePricesScreen quando o fetching é bem sucedido e há opções de viagem disponíveis.
                     // A lista de opções de viagem disponíveis é salva no bloco do LaunchedEffect.
-                    onSuccess = {
-                        onNavigateToRidePricingScreen()
+                    onSuccess = { optionsList ->
+                        if(optionsList.any { it.name.isNotEmpty() }){
+                            onNavigateToRidePricingScreen()
+                        } else {
+                            Text(
+                                text = "Não há opções de viagem disponíveis.",
+                                modifier = Modifier.padding(horizontal = 16.dp)
+                            )
+                        }
                     },
                     onFailure = { error ->
                         Log.d("debug", error.message.toString())
