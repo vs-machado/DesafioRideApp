@@ -26,9 +26,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.phoenix.travelapp.feature_ride.domain.model.RideEstimateValueResponse
+import com.google.gson.Gson
+import com.phoenix.travelapp.feature_ride.data.api.RideEstimateRequest
+import com.phoenix.travelapp.feature_ride.domain.model.Option
 
 /**
  * A main screen é responsável por fornecer ao usuário a interface de solicitação de viagens.
@@ -37,8 +39,8 @@ import com.phoenix.travelapp.feature_ride.domain.model.RideEstimateValueResponse
  */
 @Composable
 fun MainScreen(
-    viewModel: MainScreenViewModel = viewModel(), //Substituir por hiltViewModel()
-    onNavigateToRidePricingScreen: (List<RideEstimateValueResponse.Option>) -> Unit
+    viewModel: MainScreenViewModel = hiltViewModel(),
+    onNavigateToRidePricingScreen: (List<Option>) -> Unit
 ) {
 
     var userId by rememberSaveable { mutableStateOf("") }
@@ -59,7 +61,7 @@ fun MainScreen(
             modifier = Modifier.padding(16.dp)
         )
         OutlinedTextField(
-            value = "",
+            value = userId,
             onValueChange = { userId = it },
             label = { Text("ID de usuário") },
             leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "ID de usuário") },
@@ -73,7 +75,7 @@ fun MainScreen(
             modifier = Modifier.padding(16.dp)
         )
         OutlinedTextField(
-            value = "",
+            value = originAddress,
             onValueChange = { originAddress = it },
             label = { Text("Endereço de origem") },
             leadingIcon = { Icon(Icons.Outlined.Home, contentDescription = "Endereço de origem") },
@@ -86,7 +88,7 @@ fun MainScreen(
             modifier = Modifier.padding(16.dp)
         )
         OutlinedTextField(
-            value = "",
+            value = destinationAddress,
             onValueChange = { destinationAddress = it },
             label = { Text("Endereço do destino") },
             leadingIcon = { Icon(Icons.Default.LocationOn, contentDescription = "Endereço de origem") },
@@ -97,9 +99,9 @@ fun MainScreen(
         Spacer(modifier = Modifier.padding(16.dp))
         FilledTonalButton(
             onClick = { viewModel.fetchRidePrices(
-                customerId = userId,
-                originAddress = originAddress,
-                destinationAddress = destinationAddress
+                userId = userId,
+                origin = originAddress,
+                destination = destinationAddress
             ) },
             modifier = Modifier
                 .fillMaxWidth()
@@ -130,6 +132,7 @@ fun MainScreen(
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
             }
+
             is PriceCalculationState.Success -> {
                 val options = (priceCalculationState as PriceCalculationState.Success).rideOptions
 

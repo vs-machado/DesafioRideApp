@@ -63,13 +63,16 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.material.icons.extended)
+
+    // Dependências Kotlinx serialization
     implementation(libs.serialization.core)
+    implementation(libs.jetbrains.kotlinx.serialization.json)
 
     // Dependências Gson
     implementation(libs.google.gson)
     implementation(libs.converter.gson)
 
-    // Dependências Gson
+    // Dependências Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)

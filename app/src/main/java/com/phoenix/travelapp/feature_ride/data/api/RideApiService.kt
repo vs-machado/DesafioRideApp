@@ -1,6 +1,7 @@
 package com.phoenix.travelapp.feature_ride.data.api
 
-import com.phoenix.travelapp.feature_ride.domain.model.RideEstimateValueResponse
+import com.google.gson.annotations.SerializedName
+import com.phoenix.travelapp.feature_ride.domain.model.RideEstimate
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -15,7 +16,7 @@ interface RideApiService {
     @POST("ride/estimate")
     suspend fun getRideOptions(
         @Body request: RideEstimateRequest
-    ): RideEstimateValueResponse
+    ): RideEstimate
 
 }
 
@@ -27,7 +28,8 @@ interface RideApiService {
  * @property destinationAddress Endereço de destino da viagem
  */
 data class RideEstimateRequest(
-    val customerId: String,
-    val originAddress: String,
-    val destinationAddress: String
+    @SerializedName("customer_id") val customerId: String,
+    @SerializedName("origin") val originAddress: String,
+    @SerializedName("destination") val destinationAddress: String
 )
+

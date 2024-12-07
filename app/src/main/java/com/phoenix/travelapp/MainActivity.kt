@@ -13,12 +13,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.phoenix.travelapp.feature_ride.domain.model.RideEstimateValueResponse
+import com.phoenix.travelapp.feature_ride.domain.model.CustomNavType
+import com.phoenix.travelapp.feature_ride.domain.model.Option
 import com.phoenix.travelapp.feature_ride.presentation.main_screen.MainScreen
 import com.phoenix.travelapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
 import com.phoenix.travelapp.ui.theme.TravelAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
+import kotlin.reflect.typeOf
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -47,9 +49,13 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         // Tela onde o preço das viagens são exibidos ao usuário
-                        composable<RidePrices> { backStackEntry ->
-                            val ridePrices: RidePrices = backStackEntry.toRoute()
-                            RidePricesScreen(ridePrices.optionsList)
+                        composable<RidePrices>(
+                            typeMap = mapOf(
+                                typeOf<List<Option>>() to CustomNavType.RideOptionsType
+                            )
+                        ) { backStackEntry ->
+                            val rideOptions: List<Option> = backStackEntry.toRoute()
+                            RidePricesScreen(rideOptions)
                         }
                     }
                 }
@@ -61,6 +67,7 @@ class MainActivity : ComponentActivity() {
     object Home
 
     @Serializable
-    data class RidePrices(val optionsList: List<RideEstimateValueResponse.Option>)
+    data class RidePrices(
+        val optionsList: List<Option>
+    )
 }
-
