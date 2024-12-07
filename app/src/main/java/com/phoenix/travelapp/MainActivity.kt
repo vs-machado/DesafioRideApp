@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,6 +17,7 @@ import androidx.navigation.toRoute
 import com.phoenix.travelapp.feature_ride.domain.model.CustomNavType
 import com.phoenix.travelapp.feature_ride.domain.model.Option
 import com.phoenix.travelapp.feature_ride.presentation.main_screen.MainScreen
+import com.phoenix.travelapp.feature_ride.presentation.main_screen.RideEstimateSharedViewModel
 import com.phoenix.travelapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
 import com.phoenix.travelapp.ui.theme.TravelAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +32,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TravelAppTheme(dynamicColor = false) {
                 val navController = rememberNavController()
+                val sharedViewModel: RideEstimateSharedViewModel = hiltViewModel()
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -43,19 +46,15 @@ class MainActivity : ComponentActivity() {
                         // Tela inicial. Usuário insere o ID de usuário, endereço de origem e destino e solicita o cálculo dos preços da viagem
                         composable<Home> {
                             MainScreen(
-                                onNavigateToRidePricingScreen = { optionsList ->
-                                    navController.navigate(RidePrices(optionsList))
+                                viewModel = sharedViewModel,
+                                onNavigateToRidePricingScreen = {
+                                    navController.navigate(RidePrices)
                                 }
                             )
                         }
                         // Tela onde o preço das viagens são exibidos ao usuário
-                        composable<RidePrices>(
-                            typeMap = mapOf(
-                                typeOf<List<Option>>() to CustomNavType.RideOptionsType
-                            )
-                        ) { backStackEntry ->
-                            val rideOptions: List<Option> = backStackEntry.toRoute()
-                            RidePricesScreen(rideOptions)
+                        composable<RidePrices> {
+                            RidePricesScreen(viewModel = sharedViewModel)
                         }
                     }
                 }
@@ -67,7 +66,5 @@ class MainActivity : ComponentActivity() {
     object Home
 
     @Serializable
-    data class RidePrices(
-        val optionsList: List<Option>
-    )
+    object RidePrices
 }

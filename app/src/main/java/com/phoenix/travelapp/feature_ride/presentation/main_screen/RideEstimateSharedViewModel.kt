@@ -12,18 +12,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * ViewModel que gerencia a tela principal do aplicativo.
+ * ViewModel que gerencia a MainScreen e RidePricesScreen.
  * Realiza o fetching dos preços da viagem e gerencia o estado da tela.
  * @property rideApiRepository Repositório que acessa a API de serviços de corrida
  */
 @HiltViewModel
-class MainScreenViewModel @Inject constructor(
+class RideEstimateSharedViewModel @Inject constructor(
     private val rideApiRepository: RideApiRepository
 ): ViewModel() {
 
     // Estado que gerencia o fetching do cálculo dos preços da viagem
     private val _priceCalculationState = MutableStateFlow<PriceCalculationState>(PriceCalculationState.Idle)
     val priceCalculationState: StateFlow<PriceCalculationState> = _priceCalculationState.asStateFlow()
+
+    private lateinit var rideOptions: List<Option>
 
     // Função que realiza o fetching das opções de viagem disponíveis
     fun fetchRidePrices(
@@ -49,6 +51,19 @@ class MainScreenViewModel @Inject constructor(
                 }
             )
         }
+    }
+
+    fun saveRideOption(driverOptions: List<Option>) {
+        rideOptions = driverOptions
+    }
+
+    fun getRideOption(): List<Option> {
+        return rideOptions
+    }
+
+    fun resetPriceCalculationState() {
+        _priceCalculationState.value = PriceCalculationState.Idle
+
     }
 }
 

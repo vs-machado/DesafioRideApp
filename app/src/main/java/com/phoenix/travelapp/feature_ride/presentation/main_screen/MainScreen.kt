@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -26,11 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.gson.Gson
-import com.phoenix.travelapp.feature_ride.data.api.RideEstimateRequest
-import com.phoenix.travelapp.feature_ride.domain.model.Option
 
 /**
  * A main screen é responsável por fornecer ao usuário a interface de solicitação de viagens.
@@ -39,14 +36,32 @@ import com.phoenix.travelapp.feature_ride.domain.model.Option
  */
 @Composable
 fun MainScreen(
-    viewModel: MainScreenViewModel = hiltViewModel(),
-    onNavigateToRidePricingScreen: (List<Option>) -> Unit
+    viewModel: RideEstimateSharedViewModel,
+    onNavigateToRidePricingScreen: () -> Unit
 ) {
 
     var userId by rememberSaveable { mutableStateOf("") }
     var originAddress by rememberSaveable { mutableStateOf("") }
     var destinationAddress by rememberSaveable { mutableStateOf("") }
     val priceCalculationState by viewModel.priceCalculationState.collectAsStateWithLifecycle()
+
+    // Quando o fetching dos preços da viagem é bem sucedido, salva as opções de viagem no sharedViewModel
+    // e reseta o estado do priceCalculationState.
+    LaunchedEffect(priceCalculationState) {
+        if (priceCalculationState is PriceCalculationState.Success) {
+            val options = (priceCalculationState as PriceCalculationState.Success).rideOptions
+
+            options.fold(
+                onSuccess = { rideOptions ->
+                    viewModel.saveRideOption(rideOptions)
+                    viewModel.resetPriceCalculationState()
+                },
+                onFailure = { error ->
+                    Log.d("debug", error.message.toString())
+                }
+            )
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -137,8 +152,10 @@ fun MainScreen(
                 val options = (priceCalculationState as PriceCalculationState.Success).rideOptions
 
                 options.fold(
-                    onSuccess = { rideOptions ->
-                        onNavigateToRidePricingScreen(rideOptions)
+                    // Navega para RidePricesScreen quando o fetching é bem sucedido.
+                    // A lista de opções de viagem disponíveis é salva no bloco do LaunchedEffect.
+                    onSuccess = {
+                        onNavigateToRidePricingScreen()
                     },
                     onFailure = { error ->
                         Log.d("debug", error.message.toString())
