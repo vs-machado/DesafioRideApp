@@ -5,7 +5,7 @@ import com.google.gson.Strictness
 import com.phoenix.rideapp.feature_ride.data.api.RIDE_API_BASE_URL
 import com.phoenix.rideapp.feature_ride.data.api.RideApiService
 import com.phoenix.rideapp.feature_ride.data.repository.RideApiRepositoryImpl
-import com.phoenix.rideapp.feature_ride.domain.model.ride_api.repository.RideApiRepository
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideApiRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

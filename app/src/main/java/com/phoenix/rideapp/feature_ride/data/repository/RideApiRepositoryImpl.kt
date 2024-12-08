@@ -2,8 +2,8 @@ package com.phoenix.rideapp.feature_ride.data.repository
 
 import com.phoenix.rideapp.feature_ride.data.api.RideApiService
 import com.phoenix.rideapp.feature_ride.data.api.RideEstimateRequest
-import com.phoenix.rideapp.feature_ride.domain.model.RideEstimate
-import com.phoenix.rideapp.feature_ride.domain.model.ride_api.repository.RideApiRepository
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideApiRepository
 import javax.inject.Inject
 
 /**

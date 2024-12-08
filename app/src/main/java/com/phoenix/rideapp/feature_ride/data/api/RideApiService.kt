@@ -1,7 +1,7 @@
 package com.phoenix.rideapp.feature_ride.data.api
 
 import com.google.gson.annotations.SerializedName
-import com.phoenix.rideapp.feature_ride.domain.model.RideEstimate
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
 import retrofit2.http.Body
 import retrofit2.http.POST
 

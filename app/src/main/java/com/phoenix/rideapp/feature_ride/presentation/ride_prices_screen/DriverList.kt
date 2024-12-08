@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.phoenix.rideapp.feature_ride.domain.model.Option
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Option
 
 // LazyColumn que exibe a lista de motoristas disponíveis para a viagem.
 @Composable

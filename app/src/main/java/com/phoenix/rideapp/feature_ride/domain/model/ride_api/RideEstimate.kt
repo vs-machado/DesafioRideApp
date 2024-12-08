@@ -1,4 +1,4 @@
-package com.phoenix.rideapp.feature_ride.domain.model
+package com.phoenix.rideapp.feature_ride.domain.model.ride_api
 
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable

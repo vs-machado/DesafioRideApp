@@ -1,6 +1,4 @@
-package com.phoenix.rideapp.feature_ride.domain.model.ride_api.repository
-
-import com.phoenix.rideapp.feature_ride.domain.model.RideEstimate
+package com.phoenix.rideapp.feature_ride.domain.model.ride_api
 
 /**
  * Interface que define o repositório para acessar a API de serviços de corrida

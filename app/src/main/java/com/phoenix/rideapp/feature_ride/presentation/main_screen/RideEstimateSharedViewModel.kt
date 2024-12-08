@@ -2,8 +2,8 @@ package com.phoenix.rideapp.feature_ride.presentation.main_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.phoenix.rideapp.feature_ride.domain.model.RideEstimate
-import com.phoenix.rideapp.feature_ride.domain.model.ride_api.repository.RideApiRepository
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.phoenix.rideapp.BuildConfig
-import com.phoenix.rideapp.feature_ride.domain.model.LatLng
-import com.phoenix.rideapp.feature_ride.domain.model.Option
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.LatLng
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Option
 import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideEstimateSharedViewModel
 import java.net.URLEncoder
 
