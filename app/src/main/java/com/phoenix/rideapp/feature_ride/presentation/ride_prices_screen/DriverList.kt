@@ -1,6 +1,5 @@
 package com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,14 +16,16 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Option
@@ -33,8 +34,6 @@ import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Option
 @Composable
 fun DriverList(
     options: List<Option>,
-    onOptionSelected: (Option) -> Unit,
-    selectedOption: Option? = null
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -42,11 +41,7 @@ fun DriverList(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)
     ) {
         items(options) { option ->
-            DriverCard(
-                option = option,
-                isSelected = selectedOption?.id == option.id,
-                onSelect = { onOptionSelected(option) }
-            )
+            DriverCard(option = option)
         }
     }
 }
@@ -55,19 +50,11 @@ fun DriverList(
 @Composable
 fun DriverCard(
     option: Option,
-    isSelected: Boolean,
-    onSelect: () -> Unit
 ) {
-
-    // Quando o usuário clica em um card a cor da borda é alterada.
     OutlinedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .clickable { onSelect()},
-        border = CardDefaults.outlinedCardBorder(
-            enabled = isSelected
-        )
     ) {
         CardContent(option)
     }
@@ -146,6 +133,17 @@ private fun CardContent(option: Option) {
             text = "Preço: $${option.value}",
             style = MaterialTheme.typography.bodyMedium
         )
+        Spacer(modifier = Modifier.height(4.dp))
+
+        FilledTonalButton(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.align(Alignment.End)
+        ) {
+            Text(
+                text = "Escolher",
+                color = Color.DarkGray
+            )
+        }
 
     }
 }
