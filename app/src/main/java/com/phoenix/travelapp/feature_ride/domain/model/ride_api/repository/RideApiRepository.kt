@@ -1,6 +1,6 @@
 package com.phoenix.travelapp.feature_ride.domain.model.ride_api.repository
 
-import com.phoenix.travelapp.feature_ride.domain.model.Option
+import com.phoenix.travelapp.feature_ride.domain.model.RideEstimate
 
 /**
  * Interface que define o repositório para acessar a API de serviços de corrida
@@ -14,9 +14,9 @@ interface RideApiRepository {
      * @param destinationAddress Endereço de destino da viagem
      * @return Resultado contendo uma lista de opções de viagem disponíveis
      */
-    suspend fun getRideOptions(
+    suspend fun getRideEstimate(
         customerId: String,
         originAddress: String,
         destinationAddress: String
-    ): Result<List<Option>>
+    ): Result<RideEstimate>
 }

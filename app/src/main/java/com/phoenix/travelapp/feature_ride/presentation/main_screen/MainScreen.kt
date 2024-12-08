@@ -49,12 +49,14 @@ fun MainScreen(
     // salva as opções de viagem no sharedViewModel e reseta o estado do priceCalculationState.
     LaunchedEffect(priceCalculationState) {
         if (priceCalculationState is PriceCalculationState.Success) {
-            val options = (priceCalculationState as PriceCalculationState.Success).rideOptions
+            val estimateResult = (priceCalculationState as PriceCalculationState.Success).rideEstimate
 
-            options.fold(
-                onSuccess = { rideOptions ->
+            estimateResult.fold(
+                onSuccess = { estimate ->
+                    val rideOptions = estimate.options
+
                     if(rideOptions.isNotEmpty()){
-                        viewModel.saveRideOption(rideOptions)
+                        viewModel.saveRideEstimate(estimate)
                         viewModel.resetPriceCalculationState()
                     }
                 },
@@ -153,13 +155,15 @@ fun MainScreen(
             }
 
             is PriceCalculationState.Success -> {
-                val options = (priceCalculationState as PriceCalculationState.Success).rideOptions
+                val estimateResult = (priceCalculationState as PriceCalculationState.Success).rideEstimate
 
-                options.fold(
+                estimateResult.fold(
                     // Navega para RidePricesScreen quando o fetching é bem sucedido e há opções de viagem disponíveis.
                     // A lista de opções de viagem disponíveis é salva no bloco do LaunchedEffect.
-                    onSuccess = { optionsList ->
-                        if(optionsList.isNotEmpty()) {
+                    onSuccess = { estimate ->
+                        val rideOptions = estimate.options
+
+                        if(rideOptions.isNotEmpty()) {
                             onNavigateToRidePricingScreen()
                         } else {
                             Text(

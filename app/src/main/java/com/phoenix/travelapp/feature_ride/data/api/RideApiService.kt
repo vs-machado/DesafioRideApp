@@ -12,9 +12,9 @@ const val RIDE_API_BASE_URL = "https://xd5zl5kk2yltomvw5fb37y3bm40vsyrx.lambda-u
  */
 interface RideApiService {
 
-    // Retorna as opções de motoristas disponíveis para a viagem e os respectivos custos
+    // Retorna os dados da viagem, as opções de motoristas disponíveis e os respectivos custos
     @POST("ride/estimate")
-    suspend fun getRideOptions(
+    suspend fun getRideEstimate(
         @Body request: RideEstimateRequest
     ): RideEstimate
 

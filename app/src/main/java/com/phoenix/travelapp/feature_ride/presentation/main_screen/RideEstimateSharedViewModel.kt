@@ -2,7 +2,7 @@ package com.phoenix.travelapp.feature_ride.presentation.main_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.phoenix.travelapp.feature_ride.domain.model.Option
+import com.phoenix.travelapp.feature_ride.domain.model.RideEstimate
 import com.phoenix.travelapp.feature_ride.domain.model.ride_api.repository.RideApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +25,9 @@ class RideEstimateSharedViewModel @Inject constructor(
     private val _priceCalculationState = MutableStateFlow<PriceCalculationState>(PriceCalculationState.Idle)
     val priceCalculationState: StateFlow<PriceCalculationState> = _priceCalculationState.asStateFlow()
 
-    private lateinit var rideOptions: List<Option>
+    private lateinit var _rideEstimate: RideEstimate
+    val rideEstimate: RideEstimate
+        get() = _rideEstimate
 
     // Função que realiza o fetching das opções de viagem disponíveis
     fun fetchRidePrices(
@@ -42,14 +44,14 @@ class RideEstimateSharedViewModel @Inject constructor(
             }
 
             runCatching {
-                rideApiRepository.getRideOptions(
+                rideApiRepository.getRideEstimate(
                     customerId = userId,
                     originAddress = origin,
                     destinationAddress = destination
                 )
             }.fold(
-                onSuccess = { rideOptions ->
-                    _priceCalculationState.value = PriceCalculationState.Success(rideOptions)
+                onSuccess = { rideEstimate ->
+                    _priceCalculationState.value = PriceCalculationState.Success(rideEstimate)
                 },
                 onFailure = { exception ->
                     _priceCalculationState.value = PriceCalculationState.Error(exception.message ?: "Erro não identificado")
@@ -58,12 +60,8 @@ class RideEstimateSharedViewModel @Inject constructor(
         }
     }
 
-    fun saveRideOption(driverOptions: List<Option>) {
-        rideOptions = driverOptions
-    }
-
-    fun getRideOption(): List<Option> {
-        return rideOptions
+    fun saveRideEstimate(estimate: RideEstimate) {
+        _rideEstimate = estimate
     }
 
     fun resetPriceCalculationState() {
@@ -88,6 +86,6 @@ class RideEstimateSharedViewModel @Inject constructor(
 sealed class PriceCalculationState {
     object Idle: PriceCalculationState()
     object Loading: PriceCalculationState()
-    data class Success(val rideOptions: Result<List<Option>>): PriceCalculationState() // Substituir o resultado por uma data class com a resposta da API
+    data class Success(val rideEstimate: Result<RideEstimate>): PriceCalculationState() // Substituir o resultado por uma data class com a resposta da API
     data class Error(val message: String): PriceCalculationState()
 }
