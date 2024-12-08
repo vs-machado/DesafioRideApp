@@ -36,6 +36,11 @@ class RideEstimateSharedViewModel @Inject constructor(
         viewModelScope.launch {
             _priceCalculationState.value = PriceCalculationState.Loading
 
+            validateInputs(userId, origin, destination)?.let { error ->
+                _priceCalculationState.value = PriceCalculationState.Error(error)
+                return@launch
+            }
+
             runCatching {
                 rideApiRepository.getRideOptions(
                     customerId = userId,
@@ -64,6 +69,18 @@ class RideEstimateSharedViewModel @Inject constructor(
     fun resetPriceCalculationState() {
         _priceCalculationState.value = PriceCalculationState.Idle
 
+    }
+
+    // Trata os casos em que o usuário deixa os campos de id/origem/destino vazios ou origem e destino iguais,
+    // retornando uma mensagem de erro correspondente.
+    private fun validateInputs(userId: String, origin: String, destination: String): String? {
+        return when {
+            origin.isBlank() -> "O endereço de origem não foi preenchido. Preencha o endereço e tente novamente."
+            destination.isBlank() -> "O endereço de destino não foi preenchido. Preencha o endereço e tente novamente."
+            userId.isBlank() -> "O id de usuário não foi preenchido. Preencha o id e tente novamente."
+            origin == destination -> "Os endereços de destino de origem e destino não podem ser iguais. Preencha os endereços corretamente e tente novamente."
+            else -> null
+        }
     }
 }
 

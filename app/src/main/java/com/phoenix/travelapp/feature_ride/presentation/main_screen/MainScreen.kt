@@ -53,7 +53,7 @@ fun MainScreen(
 
             options.fold(
                 onSuccess = { rideOptions ->
-                    if(rideOptions.any { it.name.isNotEmpty() }){
+                    if(rideOptions.isNotEmpty()){
                         viewModel.saveRideOption(rideOptions)
                         viewModel.resetPriceCalculationState()
                     }
@@ -130,7 +130,8 @@ fun MainScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Quando o app estiver calculando os preços da viagem, informa o usuário e exibe
-        // um CircularProgressIndicator. Ao concluir o fetching, navega para a próxima tela.
+        // um CircularProgressIndicator. Ao concluir o fetching, caso os campos não estejam vazios e
+        // haja opções de viagem disponíveis, navega para a próxima tela.
         when(priceCalculationState) {
             is PriceCalculationState.Idle -> {}
             is PriceCalculationState.Loading -> {
@@ -143,10 +144,11 @@ fun MainScreen(
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
+            // Exibe uma mensagem de erro caso o fetching das opções de viagem falhe.
             is PriceCalculationState.Error -> {
                 Text(
-                    text = "Erro ao calcular o preço da viagem.",
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    text = (priceCalculationState as PriceCalculationState.Error).message,
+                    modifier = Modifier.padding(horizontal = 24.dp)
                 )
             }
 
@@ -157,20 +159,20 @@ fun MainScreen(
                     // Navega para RidePricesScreen quando o fetching é bem sucedido e há opções de viagem disponíveis.
                     // A lista de opções de viagem disponíveis é salva no bloco do LaunchedEffect.
                     onSuccess = { optionsList ->
-                        if(optionsList.any { it.name.isNotEmpty() }){
+                        if(optionsList.isNotEmpty()) {
                             onNavigateToRidePricingScreen()
                         } else {
                             Text(
-                                text = "Não há opções de viagem disponíveis.",
-                                modifier = Modifier.padding(horizontal = 16.dp)
+                                text = "Não há opções de viagem disponíveis para o endereço selecionado. Caso necessário, corrija o endereço e tente novamente.",
+                                modifier = Modifier.padding(horizontal = 24.dp)
                             )
                         }
                     },
                     onFailure = { error ->
                         Log.d("debug", error.message.toString())
                         Text(
-                            text = "Não há opções de viagem disponíveis.",
-                            modifier = Modifier.padding(horizontal = 16.dp)
+                            text = error.message.toString(),
+                            modifier = Modifier.padding(horizontal = 24.dp)
                         )
                     }
                 )
