@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.phoenix.travelapp"
+    namespace = "com.phoenix.rideapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.phoenix.travelapp"
+        applicationId = "com.phoenix.rideapp"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
