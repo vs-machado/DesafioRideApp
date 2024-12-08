@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.secrets.gradle)
 }
 
 android {
@@ -39,6 +40,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -63,6 +65,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.android.maps.utils)
+    implementation(libs.maps.utils.ktx)
 
     // Dependências Kotlinx serialization
     implementation(libs.serialization.core)
