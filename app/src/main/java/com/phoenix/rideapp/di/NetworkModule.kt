@@ -1,5 +1,7 @@
 package com.phoenix.rideapp.di
 
+import com.google.gson.GsonBuilder
+import com.google.gson.Strictness
 import com.phoenix.rideapp.feature_ride.data.api.RIDE_API_BASE_URL
 import com.phoenix.rideapp.feature_ride.data.api.RideApiService
 import com.phoenix.rideapp.feature_ride.data.repository.RideApiRepositoryImpl
@@ -41,7 +43,11 @@ object NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(RIDE_API_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(
+                GsonBuilder()
+                    .setStrictness(Strictness.LENIENT)
+                    .create()
+            ))
             .client(okHttpClient)
             .build()
     }
