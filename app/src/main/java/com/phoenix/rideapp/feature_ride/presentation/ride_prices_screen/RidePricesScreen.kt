@@ -1,5 +1,6 @@
 package com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,12 +14,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.phoenix.rideapp.BuildConfig
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.LatLng
+import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideConfirmationState
 import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideEstimateSharedViewModel
 import java.net.URLEncoder
 
@@ -29,9 +33,13 @@ import java.net.URLEncoder
  */
 @Composable
 fun RidePricesScreen(
-    viewModel: RideEstimateSharedViewModel
+    viewModel: RideEstimateSharedViewModel,
+    onNavigateToRaceHistoryScreen: () -> Unit
 ) {
-    val options = viewModel.rideEstimate.options
+    val context = LocalContext.current
+    val confirmationState = viewModel.rideConfirmationState.collectAsStateWithLifecycle()
+
+    val rideDetails = viewModel.rideEstimate
     val route = viewModel.rideEstimate.routeResponse.routes[0]
 
     // Rota em polilinha codificada. Utilizada para desenhar o mapa da viagem.
@@ -40,6 +48,27 @@ fun RidePricesScreen(
     // Coordenadas de origem e destino da viagem. Utilizadas para marcar os pontos de início e fim da viagem.
     val startLatLng = route.legs[0].startLocation.latLng
     val endLatLng = route.legs[0].endLocation.latLng
+
+    // Caso a confirmação da viagem seja bem sucedida navega para a próxima tela.
+    when(confirmationState.value) {
+        is RideConfirmationState.Success -> {
+            Toast.makeText(
+                context,
+                "Viagem confirmada com sucesso!",
+                Toast.LENGTH_SHORT
+            ).show()
+            onNavigateToRaceHistoryScreen()
+        }
+        is RideConfirmationState.Error -> {
+            Toast.makeText(
+                context,
+                "Erro ao confirmar viagem. Tente novamente.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        is RideConfirmationState.Idle -> {}
+        is RideConfirmationState.Loading -> {}
+    }
 
     Column(
         modifier = Modifier
@@ -72,8 +101,23 @@ fun RidePricesScreen(
             ),
             modifier = Modifier.padding(start = 24.dp, end = 16.dp)
         )
+
+        // Exibe a lista de motoristas disponíveis. Quando o usuário clica no botão
+        // "Confirmar" a função confirmRide é chamada.
         DriverList(
-            options = options
+            rideDetails = rideDetails,
+            onRideConfirmation = { option ->
+                viewModel.confirmRide(
+                    userId = viewModel.customerId,
+                    destination = viewModel.destinationAddress,
+                    distance = rideDetails.distance,
+                    driverId = option.id,
+                    driverName = option.name,
+                    duration = rideDetails.duration,
+                    origin = viewModel.originAddress,
+                    value = option.value
+                )
+            }
         )
 
     }

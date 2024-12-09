@@ -29,19 +29,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Option
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
+import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideEstimateSharedViewModel
 
 // LazyColumn que exibe a lista de motoristas disponíveis para a viagem.
 @Composable
 fun DriverList(
-    options: List<Option>,
+    rideDetails: RideEstimate,
+    onRideConfirmation: (Option) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)
     ) {
-        items(options) { option ->
-            DriverCard(option = option)
+        items(rideDetails.options) { option ->
+            DriverCard(
+                option = option,
+                onRideConfirmation = onRideConfirmation
+            )
         }
     }
 }
@@ -50,18 +56,25 @@ fun DriverList(
 @Composable
 fun DriverCard(
     option: Option,
+    onRideConfirmation: (Option) -> Unit
 ) {
     OutlinedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
     ) {
-        CardContent(option)
+        CardContent(
+            option = option,
+            onRideConfirmation = onRideConfirmation
+        )
     }
 }
 
 @Composable
-private fun CardContent(option: Option) {
+private fun CardContent(
+    option: Option,
+    onRideConfirmation: (Option) -> Unit
+) {
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -136,7 +149,7 @@ private fun CardContent(option: Option) {
         Spacer(modifier = Modifier.height(4.dp))
 
         FilledTonalButton(
-            onClick = { /*TODO*/ },
+            onClick = { onRideConfirmation(option) },
             modifier = Modifier.align(Alignment.End)
         ) {
             Text(

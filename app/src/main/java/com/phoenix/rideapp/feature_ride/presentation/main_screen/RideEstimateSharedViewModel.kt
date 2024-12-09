@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.phoenix.rideapp.feature_ride.data.repository.RideApiRepositoryImpl
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideResponse
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Driver
 
 /**
  * ViewModel que gerencia a MainScreen e RidePricesScreen.
@@ -25,9 +28,22 @@ class RideEstimateSharedViewModel @Inject constructor(
     private val _priceCalculationState = MutableStateFlow<PriceCalculationState>(PriceCalculationState.Idle)
     val priceCalculationState: StateFlow<PriceCalculationState> = _priceCalculationState.asStateFlow()
 
+    // Estado que gerencia o fetching da confirmação de viagem
+    private val _rideConfirmationState = MutableStateFlow<RideConfirmationState>(RideConfirmationState.Idle)
+    val rideConfirmationState: StateFlow<RideConfirmationState> = _rideConfirmationState.asStateFlow()
+
     private lateinit var _rideEstimate: RideEstimate
     val rideEstimate: RideEstimate
         get() = _rideEstimate
+
+    var customerId = ""
+        private set
+
+    var originAddress = ""
+        private set
+
+    var destinationAddress = ""
+        private set
 
     // Função que realiza o fetching das opções de viagem disponíveis
     fun fetchRidePrices(
@@ -42,6 +58,16 @@ class RideEstimateSharedViewModel @Inject constructor(
                 _priceCalculationState.value = PriceCalculationState.Error(error)
                 return@launch
             }
+
+            saveCustomerData(
+                id = userId,
+                originAddress = origin,
+                destinationAddress = destination
+            )
+            // Salva os dados para a eventual confirmação da viagem.
+            customerId = userId
+            originAddress = origin
+            destinationAddress = destination
 
             runCatching {
                 rideApiRepository.getRideEstimate(
@@ -60,6 +86,46 @@ class RideEstimateSharedViewModel @Inject constructor(
         }
     }
 
+    // Função que realiza a confirmação da viagem
+    fun confirmRide(
+        userId: String,
+        destination: String,
+        distance: Int,
+        driverId: Int,
+        driverName: String,
+        duration: String,
+        origin: String,
+        value: Double
+    ) {
+        viewModelScope.launch {
+            _rideConfirmationState.value = RideConfirmationState.Loading
+
+            val driver = Driver(
+                id = driverId,
+                name = driverName
+            )
+
+            runCatching {
+                rideApiRepository.confirmRide(
+                    customerId = userId,
+                    destination = destination,
+                    distance = distance,
+                    driver = driver,
+                    duration = duration,
+                    origin = origin,
+                    value = value
+                )
+            }.fold(
+                onSuccess = { confirmRideResponse ->
+                    _rideConfirmationState.value = RideConfirmationState.Success(confirmRideResponse)
+                },
+                onFailure = { exception ->
+                    _rideConfirmationState.value = RideConfirmationState.Error(exception.message ?: "Erro não identificado")
+                }
+            )
+        }
+    }
+
     fun saveRideEstimate(estimate: RideEstimate) {
         _rideEstimate = estimate
     }
@@ -67,6 +133,28 @@ class RideEstimateSharedViewModel @Inject constructor(
     fun resetPriceCalculationState() {
         _priceCalculationState.value = PriceCalculationState.Idle
 
+    }
+
+    /**
+     *  Salva os dados do cliente.
+     *
+     *  Utilizado para salvar os dados do cliente antes de realizar
+     *  a confirmação da viagem na classe [RideApiRepositoryImpl].
+     *
+     *  @param id ID do cliente
+     *  @param originAddress Endereço de origem da viagem
+     *  @param destinationAddress Endereço de destino da viagem
+     *
+     *  @see RideApiRepositoryImpl.confirmRide
+     */
+    private fun saveCustomerData(
+        id: String,
+        originAddress: String,
+        destinationAddress: String
+    ) {
+        this.customerId = id
+        this.originAddress = originAddress
+        this.destinationAddress = destinationAddress
     }
 
     // Trata os casos em que o usuário deixa os campos de id/origem/destino vazios ou origem e destino iguais,
@@ -88,4 +176,11 @@ sealed class PriceCalculationState {
     object Loading: PriceCalculationState()
     data class Success(val rideEstimate: Result<RideEstimate>): PriceCalculationState() // Substituir o resultado por uma data class com a resposta da API
     data class Error(val message: String): PriceCalculationState()
+}
+
+sealed class RideConfirmationState {
+    object Idle: RideConfirmationState()
+    object Loading: RideConfirmationState()
+    data class Success(val confirmRideResponse: Result<ConfirmRideResponse>): RideConfirmationState()
+    data class Error(val message: String): RideConfirmationState()
 }

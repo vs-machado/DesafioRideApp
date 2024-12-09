@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable
 data class RideEstimate(
     val destination: Destination,
     val distance: Int,
-    val duration: Int,
+    val duration: String,
     val options: List<Option>,
     val origin: Origin,
     val routeResponse: RouteResponse

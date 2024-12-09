@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.phoenix.rideapp.feature_ride.presentation.main_screen.MainScreen
 import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideEstimateSharedViewModel
+import com.phoenix.rideapp.feature_ride.presentation.race_history_screen.RaceHistoryScreen
 import com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
 import com.phoenix.rideapp.ui.theme.TravelAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +51,15 @@ class MainActivity : ComponentActivity() {
                         }
                         // Tela onde o preço das viagens são exibidos ao usuário
                         composable<RidePrices> {
-                            RidePricesScreen(viewModel = sharedViewModel)
+                            RidePricesScreen(
+                                viewModel = sharedViewModel,
+                                onNavigateToRaceHistoryScreen = {
+                                    navController.navigate(RaceHistory)
+                                }
+                            )
+                        }
+                        composable<RaceHistory> {
+                            RaceHistoryScreen()
                         }
                     }
                 }
@@ -63,4 +72,7 @@ class MainActivity : ComponentActivity() {
 
     @Serializable
     object RidePrices
+
+    @Serializable
+    object RaceHistory
 }

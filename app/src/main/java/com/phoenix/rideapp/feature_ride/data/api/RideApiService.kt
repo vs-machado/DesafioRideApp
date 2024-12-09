@@ -1,8 +1,11 @@
 package com.phoenix.rideapp.feature_ride.data.api
 
 import com.google.gson.annotations.SerializedName
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideRequest
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideResponse
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
 import retrofit2.http.Body
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 const val RIDE_API_BASE_URL = "https://xd5zl5kk2yltomvw5fb37y3bm40vsyrx.lambda-url.sa-east-1.on.aws"
@@ -18,6 +21,10 @@ interface RideApiService {
         @Body request: RideEstimateRequest
     ): RideEstimate
 
+    @PATCH("ride/confirm")
+    suspend fun confirmRide(
+        @Body request: ConfirmRideRequest
+    ): ConfirmRideResponse
 }
 
 /**
@@ -32,4 +39,5 @@ data class RideEstimateRequest(
     @SerializedName("origin") val originAddress: String,
     @SerializedName("destination") val destinationAddress: String
 )
+
 
