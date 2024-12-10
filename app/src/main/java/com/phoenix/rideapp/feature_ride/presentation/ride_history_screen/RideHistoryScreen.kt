@@ -1,0 +1,177 @@
+package com.phoenix.rideapp.feature_ride.presentation.ride_history_screen
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RideHistoryScreen(
+    driverId: Int,
+    viewModel: RideHistoryViewModel = hiltViewModel()
+) {
+    val rideHistoryState by viewModel.rideHistoryState.collectAsStateWithLifecycle()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .systemBarsPadding()
+    ){
+        // Id a ser consultado. Preenchido pelo usuário.
+        var userId by rememberSaveable { mutableStateOf("") }
+
+        // Armazena o motorista selecionado no DropdownMenu
+        var selectedDriverName by remember { mutableStateOf("") }
+        var expanded by remember { mutableStateOf(false) }
+
+        Text(
+            text = "Histórico de corridas",
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        OutlinedTextField(
+            value = userId,
+            onValueChange = { userId = it },
+            label = { Text("ID de usuário") },
+            leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "ID de usuário") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
+        ) {
+            OutlinedTextField(
+                value = selectedDriverName,
+                onValueChange = { selectedDriverName = it },
+                label = { Text("Escolha o motorista") },
+                readOnly = true,
+                modifier = Modifier
+                    .menuAnchor()
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                },
+                colors = ExposedDropdownMenuDefaults.textFieldColors()
+            )
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                val driverOptions = listOf("Todos os motoristas", "Homer Simpson", "Dominic Toretto", "James Bond")
+
+                driverOptions.forEach { driver ->
+                    DropdownMenuItem(
+                        text = { Text(driver) },
+                        onClick = {
+                            selectedDriverName = driver
+                            expanded = false
+                        }
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+
+        }
+
+        Button(
+            onClick = { viewModel.fetchRaceHistory(
+                userId,
+                driverId = driverId
+            ) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp) // Corresponde a altura dos textfields
+                .padding(horizontal = 16.dp)
+        ) {
+            Text("Consultar corridas realizadas")
+        }
+
+        when(rideHistoryState) {
+            is RideHistoryViewModel.RideHistoryState.Idle -> {}
+            is RideHistoryViewModel.RideHistoryState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+            }
+            is RideHistoryViewModel.RideHistoryState.Success -> {
+                val raceHistory = (rideHistoryState as RideHistoryViewModel.RideHistoryState.Success).history
+
+                raceHistory.getOrNull()?.let { history ->
+                    val sortedRides = when(selectedDriverName) {
+                        "Todos os motoristas" -> {
+                            history.rides.sortedByDescending { it.date }
+                        }
+
+                        else -> {
+                            history.rides
+                                .filter { it.driver.name == selectedDriverName }
+                                .sortedByDescending { it.date }
+                        }
+                    }
+
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        items(sortedRides) { ride ->
+                            RideHistoryItem(ride)
+                        }
+                    }
+                }
+
+            }
+            is RideHistoryViewModel.RideHistoryState.Error -> {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Ocorreu um erro ao carregar o histórico de corridas.",
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        }
+
+    }
+}
+
+@Preview
+@Composable
+fun RaceHistoryScreenPreview() {
+//    RideHistoryScreen()
+}

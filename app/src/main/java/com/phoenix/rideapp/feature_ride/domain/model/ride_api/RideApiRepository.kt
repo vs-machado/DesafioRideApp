@@ -1,5 +1,8 @@
 package com.phoenix.rideapp.feature_ride.domain.model.ride_api
 
+import com.phoenix.rideapp.feature_ride.domain.model.common.Driver
+import com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
+
 /**
  * Interface que define o repositório para acessar a API de serviços de corrida
  */
@@ -41,4 +44,17 @@ interface RideApiRepository {
         origin: String,
         value: Double
     ): Result<ConfirmRideResponse>
+
+    /**
+     * Retorna o histórico de corridas para o id de usuário fornecido
+     *
+     * @param userId ID do cliente a ser consultado
+     * @param driverId ID do motorista selecionado na [RidePricesScreen]
+     *
+     * @return [RideHistoryResponse] contendo o histórico de corridas do cliente
+     */
+    suspend fun getRideHistory(
+        userId: String,
+        driverId: Int
+    ): Result<RideHistoryResponse>
 }

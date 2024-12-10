@@ -2,15 +2,18 @@ package com.phoenix.rideapp.feature_ride.data.repository
 
 import com.phoenix.rideapp.feature_ride.data.api.RideApiService
 import com.phoenix.rideapp.feature_ride.data.api.RideEstimateRequest
+import com.phoenix.rideapp.feature_ride.domain.model.common.Driver
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideRequest
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideResponse
-import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Driver
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideHistoryResponse
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideApiRepository
 import javax.inject.Inject
 
 /**
  * Implementação do repositório para acessar a API de serviços de corrida
+ *
+ * @see [RideApiRepository]
  */
 class RideApiRepositoryImpl @Inject constructor (
     private val api: RideApiService
@@ -55,6 +58,21 @@ class RideApiRepositoryImpl @Inject constructor (
             )
             val response = api.confirmRide(request)
 
+            Result.success(response)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    // Retorna o histórico de corridas para o id de usuário fornecido
+    // e motorista selecionado na RidePricesScreen
+    override suspend fun getRideHistory(
+        userId: String,
+        driverId: Int
+    ): Result<RideHistoryResponse> {
+
+        return try {
+            val response = api.getRideHistory(userId, driverId)
             Result.success(response)
         } catch (e: Exception) {
             Result.failure(e)

@@ -2,17 +2,19 @@ package com.phoenix.rideapp.feature_ride.presentation.main_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
+import com.phoenix.rideapp.feature_ride.data.repository.RideApiRepositoryImpl
+import com.phoenix.rideapp.feature_ride.domain.model.common.Driver
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideResponse
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideApiRepository
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
+import com.phoenix.rideapp.feature_ride.presentation.ride_history_screen.RideHistoryScreen
+import com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.phoenix.rideapp.feature_ride.data.repository.RideApiRepositoryImpl
-import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideResponse
-import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Driver
 
 /**
  * ViewModel que gerencia a MainScreen e RidePricesScreen.
@@ -35,6 +37,9 @@ class RideEstimateSharedViewModel @Inject constructor(
     private lateinit var _rideEstimate: RideEstimate
     val rideEstimate: RideEstimate
         get() = _rideEstimate
+
+    var driverId = -1
+        private set
 
     var customerId = ""
         private set
@@ -117,6 +122,7 @@ class RideEstimateSharedViewModel @Inject constructor(
                 )
             }.fold(
                 onSuccess = { confirmRideResponse ->
+                    saveSelectedDriver(driverId)
                     _rideConfirmationState.value = RideConfirmationState.Success(confirmRideResponse)
                 },
                 onFailure = { exception ->
@@ -157,6 +163,17 @@ class RideEstimateSharedViewModel @Inject constructor(
         this.destinationAddress = destinationAddress
     }
 
+    /**
+     * Salva o motorista selecionado na [RidePricesScreen].
+     *
+     * A variável é utilizada para realizar a filtragem do histórico de corridas
+     * na [RideHistoryScreen].
+     */
+    private fun saveSelectedDriver(driverId: Int) {
+        this.driverId = driverId
+    }
+
+
     // Trata os casos em que o usuário deixa os campos de id/origem/destino vazios ou origem e destino iguais,
     // retornando uma mensagem de erro correspondente.
     private fun validateInputs(userId: String, origin: String, destination: String): String? {
@@ -178,9 +195,11 @@ sealed class PriceCalculationState {
     data class Error(val message: String): PriceCalculationState()
 }
 
+// Estado que gerencia a confirmação da viagem
 sealed class RideConfirmationState {
     object Idle: RideConfirmationState()
     object Loading: RideConfirmationState()
     data class Success(val confirmRideResponse: Result<ConfirmRideResponse>): RideConfirmationState()
     data class Error(val message: String): RideConfirmationState()
 }
+

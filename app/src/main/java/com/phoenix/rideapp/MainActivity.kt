@@ -13,9 +13,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.phoenix.rideapp.feature_ride.presentation.main_screen.MainScreen
 import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideEstimateSharedViewModel
-import com.phoenix.rideapp.feature_ride.presentation.race_history_screen.RaceHistoryScreen
+import com.phoenix.rideapp.feature_ride.presentation.ride_history_screen.RideHistoryScreen
 import com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
 import com.phoenix.rideapp.ui.theme.TravelAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,13 +54,14 @@ class MainActivity : ComponentActivity() {
                         composable<RidePrices> {
                             RidePricesScreen(
                                 viewModel = sharedViewModel,
-                                onNavigateToRaceHistoryScreen = {
-                                    navController.navigate(RaceHistory)
+                                onNavigateToRaceHistoryScreen = { driverId ->
+                                    navController.navigate(RideHistory(driverId))
                                 }
                             )
                         }
-                        composable<RaceHistory> {
-                            RaceHistoryScreen()
+                        composable<RideHistory> { backStackEntry ->
+                            val driverId: RideHistory = backStackEntry.toRoute()
+                            RideHistoryScreen(driverId.id)
                         }
                     }
                 }
@@ -74,5 +76,5 @@ class MainActivity : ComponentActivity() {
     object RidePrices
 
     @Serializable
-    object RaceHistory
+    data class RideHistory(val id: Int)
 }

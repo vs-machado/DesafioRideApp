@@ -11,6 +11,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +38,7 @@ import java.net.URLEncoder
 @Composable
 fun RidePricesScreen(
     viewModel: RideEstimateSharedViewModel,
-    onNavigateToRaceHistoryScreen: () -> Unit
+    onNavigateToRaceHistoryScreen: (Int) -> Unit
 ) {
     val context = LocalContext.current
     val confirmationState = viewModel.rideConfirmationState.collectAsStateWithLifecycle()
@@ -48,7 +52,7 @@ fun RidePricesScreen(
     // Coordenadas de origem e destino da viagem. Utilizadas para marcar os pontos de início e fim da viagem.
     val startLatLng = route.legs[0].startLocation.latLng
     val endLatLng = route.legs[0].endLocation.latLng
-
+    
     // Caso a confirmação da viagem seja bem sucedida navega para a próxima tela.
     when(confirmationState.value) {
         is RideConfirmationState.Success -> {
@@ -57,7 +61,7 @@ fun RidePricesScreen(
                 "Viagem confirmada com sucesso!",
                 Toast.LENGTH_SHORT
             ).show()
-            onNavigateToRaceHistoryScreen()
+            onNavigateToRaceHistoryScreen(viewModel.driverId)
         }
         is RideConfirmationState.Error -> {
             Toast.makeText(

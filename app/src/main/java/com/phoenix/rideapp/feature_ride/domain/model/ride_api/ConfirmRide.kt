@@ -1,6 +1,7 @@
 package com.phoenix.rideapp.feature_ride.domain.model.ride_api
 
 import com.google.gson.annotations.SerializedName
+import com.phoenix.rideapp.feature_ride.domain.model.common.Driver
 
 // Retorna a resposta da confirmação da viagem
 data class ConfirmRideResponse(
@@ -25,10 +26,4 @@ data class ConfirmRideRequest(
     val duration: String,
     val origin: String,
     val value: Double
-)
-
-// Dados do motorista
-data class Driver(
-    val id: Int,
-    val name: String
 )
