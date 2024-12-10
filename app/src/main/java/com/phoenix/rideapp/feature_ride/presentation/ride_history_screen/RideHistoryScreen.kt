@@ -19,6 +19,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -50,8 +52,11 @@ fun RideHistoryScreen(
         // Id a ser consultado. Preenchido pelo usuário.
         var userId by rememberSaveable { mutableStateOf("") }
 
-        // Armazena o motorista selecionado no DropdownMenu
+        // Armazena o motorista selecionado quando o usuário clica no botão "Consultar corridas realizadas"
         var selectedDriverName by remember { mutableStateOf("") }
+
+        // Armazena o motorista selecionado no DropdownMenu
+        var tempDriverName by remember { mutableStateOf("") }
         var expanded by remember { mutableStateOf(false) }
 
         Text(
@@ -74,9 +79,9 @@ fun RideHistoryScreen(
             onExpandedChange = { expanded = !expanded }
         ) {
             OutlinedTextField(
-                value = selectedDriverName,
-                onValueChange = { selectedDriverName = it },
-                label = { Text("Escolha o motorista") },
+                value = tempDriverName,
+                onValueChange = {},
+                label = { Text("Selecione um motorista") },
                 readOnly = true,
                 modifier = Modifier
                     .menuAnchor()
@@ -92,27 +97,27 @@ fun RideHistoryScreen(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
+                // Opções do filtro de pesquisas
                 val driverOptions = listOf("Todos os motoristas", "Homer Simpson", "Dominic Toretto", "James Bond")
 
                 driverOptions.forEach { driver ->
                     DropdownMenuItem(
                         text = { Text(driver) },
                         onClick = {
-                            selectedDriverName = driver
+                            tempDriverName = driver
                             expanded = false
                         }
                     )
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
-
         }
 
         Button(
-            onClick = { viewModel.fetchRaceHistory(
-                userId,
-                driverId = driverId
-            ) },
+            onClick = {
+                selectedDriverName = tempDriverName
+                viewModel.fetchRaceHistory(userId, driverId = driverId)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp) // Corresponde a altura dos textfields
@@ -146,17 +151,26 @@ fun RideHistoryScreen(
                         }
                     }
 
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
-                        items(sortedRides) { ride ->
-                            RideHistoryItem(ride)
+                    if(sortedRides.isNotEmpty()){
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
+                            items(sortedRides) { ride ->
+                                RideHistoryItem(ride)
+                            }
                         }
+                    } else {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Nenhuma corrida encontrada para o respectivo motorista.",
+                            color = Color.Red,
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
                     }
                 }
-
             }
             is RideHistoryViewModel.RideHistoryState.Error -> {
                 Spacer(modifier = Modifier.height(16.dp))
