@@ -56,6 +56,10 @@ class RideHistoryViewModel @Inject constructor(
         }
     }
 
+    fun resetRideHistoryState() {
+        _rideHistoryState.value = RideHistoryState.Idle
+    }
+
 }
 
 // Estado que gerencia o fetching do histórico de viagens do usuário consultado

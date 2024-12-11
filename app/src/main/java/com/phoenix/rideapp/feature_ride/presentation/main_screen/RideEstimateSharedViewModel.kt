@@ -119,11 +119,14 @@ class RideEstimateSharedViewModel @Inject constructor(
                 name = driverName
             )
 
+            // O metodo confirmRide recebe a distância do percurso em quilômetros ao invés de metros.
+            val distanceInKilometers = distance / 1000.0
+
             runCatching {
                 rideApiRepository.confirmRide(
                     customerId = userId,
                     destination = destination,
-                    distance = distance,
+                    distance = distanceInKilometers,
                     driver = driver,
                     duration = duration,
                     origin = origin,

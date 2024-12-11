@@ -79,7 +79,7 @@ class RideApiRepositoryImpl @Inject constructor (
     override suspend fun confirmRide(
         customerId: String,
         destination: String,
-        distance: Int,
+        distance: Double,
         driver: Driver,
         duration: String,
         origin: String,

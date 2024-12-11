@@ -21,7 +21,7 @@ data class ConfirmRideResponse(
 data class ConfirmRideRequest(
     @SerializedName("customer_id") val customerId: String,
     val destination: String,
-    val distance: Int,
+    val distance: Double,
     val driver: Driver,
     val duration: String,
     val origin: String,

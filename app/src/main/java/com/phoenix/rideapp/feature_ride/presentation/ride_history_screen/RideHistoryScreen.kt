@@ -171,6 +171,7 @@ fun RideHistoryScreen(
                         )
                     }
                 }
+
             }
             is RideHistoryState.Error -> {
                 Spacer(modifier = Modifier.height(16.dp))
@@ -178,6 +179,7 @@ fun RideHistoryScreen(
                     text = (rideHistoryState as RideHistoryState.Error).message,
                     modifier = Modifier.padding(16.dp)
                 )
+
             }
         }
 

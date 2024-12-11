@@ -20,7 +20,7 @@ data class RideHistoryResponse(
  *
  * @property date Data da viagem
  * @property destination Endereço de destino da viagem
- * @property distance Distância perviagem
+ * @property distance Distância da viagem em quilômetros
  * @property driver Dados do motorista (Id e nome)
  * @property duration Duração da viagem
  * @property id ID da viagem
