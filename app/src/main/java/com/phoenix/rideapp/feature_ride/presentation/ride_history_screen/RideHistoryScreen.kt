@@ -127,16 +127,16 @@ fun RideHistoryScreen(
         }
 
         when(rideHistoryState) {
-            is RideHistoryViewModel.RideHistoryState.Idle -> {}
-            is RideHistoryViewModel.RideHistoryState.Loading -> {
+            is RideHistoryState.Idle -> {}
+            is RideHistoryState.Loading -> {
                 Box(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
             }
-            is RideHistoryViewModel.RideHistoryState.Success -> {
-                val raceHistory = (rideHistoryState as RideHistoryViewModel.RideHistoryState.Success).history
+            is RideHistoryState.Success -> {
+                val raceHistory = (rideHistoryState as RideHistoryState.Success).history
 
                 raceHistory.getOrNull()?.let { history ->
                     val sortedRides = when(selectedDriverName) {
@@ -172,10 +172,10 @@ fun RideHistoryScreen(
                     }
                 }
             }
-            is RideHistoryViewModel.RideHistoryState.Error -> {
+            is RideHistoryState.Error -> {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Ocorreu um erro ao carregar o histórico de corridas.",
+                    text = (rideHistoryState as RideHistoryState.Error).message,
                     modifier = Modifier.padding(16.dp)
                 )
             }

@@ -6,6 +6,7 @@ import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideRespons
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideHistoryResponse
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
 import com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
@@ -43,7 +44,7 @@ interface RideApiService {
     suspend fun getRideHistory(
        @Path("customer_id") userId: String,
        @Query("driver_id") driverId: Int
-    ): RideHistoryResponse
+    ): Response<RideHistoryResponse>
 }
 
 /**

@@ -41,7 +41,13 @@ class RideHistoryViewModel @Inject constructor(
                 )
             }.fold(
                 onSuccess = { raceHistory ->
-                    _rideHistoryState.value = RideHistoryState.Success(raceHistory)
+                    if(raceHistory.isSuccess) {
+                        _rideHistoryState.value = RideHistoryState.Success(raceHistory)
+                    } else {
+                        _rideHistoryState.value = RideHistoryState.Error(
+                            raceHistory.exceptionOrNull()?.message ?: "Um erro desconhecido ocorreu. Reinicie o aplicativo."
+                        )
+                    }
                 },
                 onFailure = { error ->
                     _rideHistoryState.value = RideHistoryState.Error(error.message ?: "Erro ao buscar histórico de corridas")
@@ -50,11 +56,12 @@ class RideHistoryViewModel @Inject constructor(
         }
     }
 
-    // Estado que gerencia o fetching do histórico de viagens do usuário consultado
-    sealed class RideHistoryState {
-        object Idle: RideHistoryState()
-        object Loading: RideHistoryState()
-        data class Success(val history: Result<RideHistoryResponse>): RideHistoryState()
-        data class Error(val message: String): RideHistoryState()
-    }
+}
+
+// Estado que gerencia o fetching do histórico de viagens do usuário consultado
+sealed class RideHistoryState {
+    object Idle: RideHistoryState()
+    object Loading: RideHistoryState()
+    data class Success(val history: Result<RideHistoryResponse>): RideHistoryState()
+    data class Error(val message: String): RideHistoryState()
 }

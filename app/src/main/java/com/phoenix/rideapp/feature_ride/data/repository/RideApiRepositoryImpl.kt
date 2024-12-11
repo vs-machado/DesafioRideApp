@@ -1,5 +1,6 @@
 package com.phoenix.rideapp.feature_ride.data.repository
 
+import retrofit2.HttpException
 import com.phoenix.rideapp.feature_ride.data.api.RideApiService
 import com.phoenix.rideapp.feature_ride.data.api.RideEstimateRequest
 import com.phoenix.rideapp.feature_ride.domain.model.common.Driver
@@ -8,6 +9,7 @@ import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideRespons
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideHistoryResponse
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideApiRepository
+import java.io.IOException
 import javax.inject.Inject
 
 /**
@@ -73,9 +75,27 @@ class RideApiRepositoryImpl @Inject constructor (
 
         return try {
             val response = api.getRideHistory(userId, driverId)
-            Result.success(response)
-        } catch (e: Exception) {
-            Result.failure(e)
+
+            if(response.isSuccessful) {
+                val responseBody = response.body()
+                if(responseBody != null) {
+                    Result.success(responseBody)
+                } else {
+                    Result.failure(Exception("Nenhuma corrida encontrada."))
+                }
+            } else {
+                Result.failure(Exception("Um erro inesperado ocorreu. Reinicie o aplicativo e tente novamente."))
+            }
+        } catch (e: IOException) {
+            Result.failure(Exception("Sem conexão com a internet. Tente novamente."))
+        } catch (e: HttpException) {
+           val errorMessage = when (e.code()) {
+               400 -> "Motorista inválido. Corrija o nome e tente novamente."
+               404 -> "Nenhuma corrida encontrada para o motorista selecionado."
+               500 -> "Um erro de servidor ocorreu. Tente novamente mais tarde."
+               else -> "Um erro desconhecido ocorreu. Contate a Central de Atendimento."
+           }
+            Result.failure(Exception(errorMessage))
         }
     }
 }
