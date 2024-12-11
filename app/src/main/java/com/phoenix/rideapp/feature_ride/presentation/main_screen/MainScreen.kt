@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.phoenix.rideapp.feature_ride.domain.util.debounceHandler
 import com.phoenix.rideapp.ui.theme.WhiteSnow
 
 /**
@@ -176,15 +177,18 @@ fun MainScreen(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { viewModel.fetchRidePrices(
-                        userId = userId,
-                        origin = originAddress,
-                        destination = destinationAddress
-                    ) },
+                    onClick = debounceHandler {
+                        viewModel.fetchRidePrices(
+                            userId = userId,
+                            origin = originAddress,
+                            destination = destinationAddress
+                        )
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp) // Corresponde a altura dos textfields
                         .padding(horizontal = 16.dp)
+
                 ) {
                     Text("Solicitar viagem")
                 }

@@ -1,6 +1,5 @@
 package com.phoenix.rideapp.feature_ride.presentation.ride_history_screen
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -33,14 +32,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideConfirmationState
+import com.phoenix.rideapp.feature_ride.domain.util.debounceHandler
 import com.phoenix.rideapp.ui.theme.LightGreen
-import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,7 +45,6 @@ fun RideHistoryScreen(
     driverId: Int,
     viewModel: RideHistoryViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
     val rideHistoryState by viewModel.rideHistoryState.collectAsStateWithLifecycle()
 
     Column(
@@ -127,7 +123,7 @@ fun RideHistoryScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {
+            onClick = debounceHandler {
                 if (userId.isNotBlank()) {
                     selectedDriverName = tempDriverName
                     viewModel.fetchRaceHistory(userId, driverId = driverId)

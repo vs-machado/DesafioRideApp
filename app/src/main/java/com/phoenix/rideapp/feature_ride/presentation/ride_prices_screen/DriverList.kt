@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Option
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
+import com.phoenix.rideapp.feature_ride.domain.util.debounceHandler
 
 // LazyColumn que exibe a lista de motoristas disponíveis para a viagem.
 @Composable
@@ -155,7 +156,9 @@ private fun CardContent(
         Spacer(modifier = Modifier.height(4.dp))
 
         FilledTonalButton(
-            onClick = { onRideConfirmation(option) },
+            onClick = debounceHandler {
+                onRideConfirmation(option)
+            },
             modifier = Modifier.align(Alignment.End)
         ) {
             Text(
