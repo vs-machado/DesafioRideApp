@@ -132,10 +132,16 @@ class RideEstimateSharedViewModel @Inject constructor(
             }.fold(
                 onSuccess = { confirmRideResponse ->
                     saveSelectedDriver(driverId)
-                    _rideConfirmationState.value = RideConfirmationState.Success(confirmRideResponse)
+                    if(confirmRideResponse.isSuccess) {
+                        _rideConfirmationState.value = RideConfirmationState.Success(confirmRideResponse)
+                    } else {
+                        _rideConfirmationState.value = RideConfirmationState.Error(
+                            confirmRideResponse.exceptionOrNull()?.message ?: "Um erro desconhecido ocorreu. Reinicie o aplicativo."
+                        )
+                    }
                 },
                 onFailure = { exception ->
-                    _rideConfirmationState.value = RideConfirmationState.Error(exception.message ?: "Erro não identificado")
+                    _rideConfirmationState.value = RideConfirmationState.Error(exception.message ?: "Falha ao confirmar viagem.")
                 }
             )
         }
@@ -148,6 +154,10 @@ class RideEstimateSharedViewModel @Inject constructor(
     fun resetPriceCalculationState() {
         _priceCalculationState.value = PriceCalculationState.Idle
 
+    }
+
+    fun resetRideConfirmationState() {
+        _rideConfirmationState.value = RideConfirmationState.Idle
     }
 
     /**

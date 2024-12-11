@@ -98,9 +98,28 @@ class RideApiRepositoryImpl @Inject constructor (
             )
             val response = api.confirmRide(request)
 
-            Result.success(response)
-        } catch (e: Exception) {
-            Result.failure(e)
+            if(response.isSuccessful) {
+                val responseBody = response.body()
+
+                if(responseBody != null) {
+                    Result.success(responseBody)
+                } else {
+                    Result.failure(Exception("Falha ao confirmar corrida."))
+                }
+            } else {
+                Result.failure(Exception("Um erro inesperado ocorreu. Reinicie o aplciativo e tente novamnte."))
+            }
+        } catch (e: IOException) {
+            Result.failure(Exception("Sem conexão com a internet. Tente novamente."))
+        } catch(e: HttpException) {
+            val errorMessage = when(e.code()) {
+                400 -> "Os dados fornecidos são inválidos."
+                404 -> "Falha ao selecionar motorista. Selecione outro motorista disponível."
+                406 -> "O motorista selecionado não está disponível para viagens desta quilometragem. " +
+                        "Por favor, escolha outro motorista."
+                else -> "Um erro inesperado ocorreu. Reinicie o aplicativo e tente novamente."
+            }
+            Result.failure(Exception(errorMessage))
         }
     }
 

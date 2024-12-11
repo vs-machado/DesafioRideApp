@@ -30,7 +30,7 @@ interface RideApiService {
     @PATCH("ride/confirm")
     suspend fun confirmRide(
         @Body request: ConfirmRideRequest
-    ): ConfirmRideResponse
+    ): Response<ConfirmRideResponse>
 
     /**
      * Retorna o histórico de corridas para o id de usuário fornecido

@@ -11,6 +11,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,6 +29,7 @@ import com.phoenix.rideapp.BuildConfig
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.LatLng
 import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideConfirmationState
 import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideEstimateSharedViewModel
+import kotlinx.coroutines.delay
 import java.net.URLEncoder
 
 /**
@@ -37,7 +43,8 @@ fun RidePricesScreen(
     onNavigateToRaceHistoryScreen: (Int) -> Unit
 ) {
     val context = LocalContext.current
-    val confirmationState = viewModel.rideConfirmationState.collectAsStateWithLifecycle()
+    val confirmationState by viewModel.rideConfirmationState.collectAsStateWithLifecycle()
+    var isShowingToast by remember { mutableStateOf(false) }
 
     val rideDetails = viewModel.rideEstimate
     val route = viewModel.rideEstimate.routeResponse.routes[0]
@@ -50,24 +57,41 @@ fun RidePricesScreen(
     val endLatLng = route.legs[0].endLocation.latLng
     
     // Caso a confirmação da viagem seja bem sucedida navega para a próxima tela.
-    when(confirmationState.value) {
-        is RideConfirmationState.Success -> {
-            Toast.makeText(
-                context,
-                "Viagem confirmada com sucesso!",
-                Toast.LENGTH_SHORT
-            ).show()
-            onNavigateToRaceHistoryScreen(viewModel.driverId)
+    // Ao clicar no botão de confirmar viagem a variável isShowingToast previne que o Toast
+    // seja chamado novamente caso o usuário clique várias vezes no botão.
+    LaunchedEffect(confirmationState) {
+        when(confirmationState) {
+            is RideConfirmationState.Success -> {
+                viewModel.resetRideConfirmationState()
+                onNavigateToRaceHistoryScreen(viewModel.driverId)
+
+                if (!isShowingToast) {
+                    isShowingToast = true
+                    Toast.makeText(
+                        context,
+                        "Viagem confirmada com sucesso!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    delay(2000)
+                    isShowingToast = false
+                }
+            }
+            is RideConfirmationState.Error -> {
+                if (!isShowingToast) {
+                    isShowingToast = true
+                    Toast.makeText(
+                        context,
+                        (confirmationState as RideConfirmationState.Error).message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    delay(2000)
+                    isShowingToast = false
+                    viewModel.resetRideConfirmationState()
+                }
+            }
+            is RideConfirmationState.Idle -> {}
+            is RideConfirmationState.Loading -> {}
         }
-        is RideConfirmationState.Error -> {
-            Toast.makeText(
-                context,
-                "Erro ao confirmar viagem. Tente novamente.",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-        is RideConfirmationState.Idle -> {}
-        is RideConfirmationState.Loading -> {}
     }
 
     Column(
