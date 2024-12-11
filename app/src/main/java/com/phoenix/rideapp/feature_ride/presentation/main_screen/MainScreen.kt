@@ -215,6 +215,8 @@ fun MainScreen(
             is PriceCalculationState.Error -> {
                 Text(
                     text = (priceCalculationState as PriceCalculationState.Error).message,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.Red,
                     modifier = Modifier.padding(horizontal = 24.dp)
                 )
             }
@@ -243,9 +245,10 @@ fun MainScreen(
                         }
                     },
                     onFailure = { error ->
-                        Log.d("debug", error.message.toString())
                         Text(
                             text = error.message.toString(),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Red,
                             modifier = Modifier.padding(horizontal = 24.dp)
                         )
                     }
