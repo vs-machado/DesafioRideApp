@@ -1,18 +1,23 @@
 package com.phoenix.rideapp.feature_ride.presentation.main_screen
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -22,10 +27,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -69,71 +76,116 @@ fun MainScreen(
         }
     }
 
-    Column(
+    Column (
         modifier = Modifier
-            .fillMaxSize()
-            .systemBarsPadding()
+            .systemBarsPadding(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Olá, passageiro!",
-            modifier = Modifier.padding(16.dp),
-            style = MaterialTheme.typography.titleLarge
+            modifier = Modifier.padding(horizontal = 32.dp),
+            style = MaterialTheme.typography.headlineLarge
         )
         Text(
-            text = "Para solicitar uma viagem, insira seu ID de usuário:",
-            modifier = Modifier.padding(16.dp)
+            text = "Insira os dados para solicitar uma viagem.",
+            modifier = Modifier.padding(horizontal = 32.dp),
+            style = MaterialTheme.typography.bodyMedium
         )
-        OutlinedTextField(
-            value = userId,
-            onValueChange = { userId = it },
-            label = { Text("ID de usuário") },
-            leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "ID de usuário") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        )
-        Spacer(modifier = Modifier.padding(8.dp))
-        Text(
-            text = "Local de partida:",
-            modifier = Modifier.padding(16.dp)
-        )
-        OutlinedTextField(
-            value = originAddress,
-            onValueChange = { originAddress = it },
-            label = { Text("Endereço de origem") },
-            leadingIcon = { Icon(Icons.Outlined.Home, contentDescription = "Endereço de origem") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        )
-        Text(
-            text = "Local de destino:",
-            modifier = Modifier.padding(16.dp)
-        )
-        OutlinedTextField(
-            value = destinationAddress,
-            onValueChange = { destinationAddress = it },
-            label = { Text("Endereço do destino") },
-            leadingIcon = { Icon(Icons.Default.LocationOn, contentDescription = "Endereço de origem") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        )
-        Spacer(modifier = Modifier.padding(16.dp))
-        Button(
-            onClick = { viewModel.fetchRidePrices(
-                userId = userId,
-                origin = originAddress,
-                destination = destinationAddress
-            ) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp) // Corresponde a altura dos textfields
-                .padding(horizontal = 16.dp)
-        ) {
-            Text("Solicitar viagem")
-        }
         Spacer(modifier = Modifier.height(16.dp))
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            shape = RoundedCornerShape(32.dp)
+        ) {
+            Column {
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    text = "Dados da viagem",
+                    modifier = Modifier.padding(horizontal = 24.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                val isUserIdFocused = remember { mutableStateOf(false) }
+                OutlinedTextField(
+                    value = userId,
+                    onValueChange = { userId = it },
+                    label = { Text("ID de usuário") },
+                    leadingIcon = { if(isUserIdFocused.value) {
+                        Icon(Icons.Filled.Person, contentDescription = "ID de usuário")
+                    } else {
+                        Icon(Icons.Outlined.Person, contentDescription = "ID de usuário")
+                    }
+                    },
+                    shape = RoundedCornerShape(32.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .onFocusChanged { focusState ->
+                            isUserIdFocused.value = focusState.isFocused
+                        }
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                val isOriginAddressFocused = remember { mutableStateOf(false) }
+                OutlinedTextField(
+                    value = originAddress,
+                    onValueChange = { originAddress = it },
+                    label = { Text("Endereço de origem") },
+                    leadingIcon = { if(isOriginAddressFocused.value) {
+                        Icon(Icons.Filled.Home, contentDescription = "Endereço de origem")
+                    } else {
+                        Icon(Icons.Outlined.Home, contentDescription = "Endereço de origem")
+                    }
+                    },
+                    shape = RoundedCornerShape(32.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .onFocusChanged { focusState ->
+                            isOriginAddressFocused.value = focusState.isFocused
+                        }
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                val isDestinationAddressFocused = remember { mutableStateOf(false) }
+                OutlinedTextField(
+                    value = destinationAddress,
+                    onValueChange = { destinationAddress = it },
+                    label = { Text("Endereço do destino") },
+                    leadingIcon = { if(isDestinationAddressFocused.value) {
+                        Icon(Icons.Filled.LocationOn, contentDescription = "Endereço do destino")
+                    }  else {
+                        Icon(Icons.Outlined.LocationOn, contentDescription = "Endereço do destino")
+                    }
+                    },
+                    shape = RoundedCornerShape(32.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .onFocusChanged { focusState ->
+                            isDestinationAddressFocused.value = focusState.isFocused
+                        }
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(
+                    onClick = { viewModel.fetchRidePrices(
+                        userId = userId,
+                        origin = originAddress,
+                        destination = destinationAddress
+                    ) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp) // Corresponde a altura dos textfields
+                        .padding(horizontal = 16.dp)
+                ) {
+                    Text("Solicitar viagem")
+                }
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+        }
 
         // Quando o app estiver calculando os preços da viagem, informa o usuário e exibe
         // um CircularProgressIndicator. Ao concluir o fetching, caso os campos não estejam vazios e
@@ -192,8 +244,6 @@ fun MainScreen(
             }
         }
     }
-
-
 }
 
 @Preview
