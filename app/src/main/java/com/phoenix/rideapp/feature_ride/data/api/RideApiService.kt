@@ -25,7 +25,7 @@ interface RideApiService {
     @POST("ride/estimate")
     suspend fun getRideEstimate(
         @Body request: RideEstimateRequest
-    ): RideEstimate
+    ): Response<RideEstimate>
 
     @PATCH("ride/confirm")
     suspend fun confirmRide(

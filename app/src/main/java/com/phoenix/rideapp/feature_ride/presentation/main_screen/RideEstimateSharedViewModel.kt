@@ -50,7 +50,13 @@ class RideEstimateSharedViewModel @Inject constructor(
     var destinationAddress = ""
         private set
 
-    // Função que realiza o fetching das opções de viagem disponíveis
+    /**
+     *  Função que realiza o fetching das opções de corrida disponíveis
+     *
+     *  @param userId ID do cliente que está solicitando a corrida
+     *  @param origin Endereço de origem da corrida
+     *  @param destination Endereço de destino da corrida
+     */
     fun fetchRidePrices(
         userId: String,
         origin: String,
@@ -64,15 +70,12 @@ class RideEstimateSharedViewModel @Inject constructor(
                 return@launch
             }
 
+            // Salva os dados para a eventual confirmação da viagem na RidePricesScreen.
             saveCustomerData(
                 id = userId,
                 originAddress = origin,
                 destinationAddress = destination
             )
-            // Salva os dados para a eventual confirmação da viagem.
-            customerId = userId
-            originAddress = origin
-            destinationAddress = destination
 
             runCatching {
                 rideApiRepository.getRideEstimate(
@@ -82,10 +85,16 @@ class RideEstimateSharedViewModel @Inject constructor(
                 )
             }.fold(
                 onSuccess = { rideEstimate ->
-                    _priceCalculationState.value = PriceCalculationState.Success(rideEstimate)
+                    if(rideEstimate.isSuccess) {
+                        _priceCalculationState.value = PriceCalculationState.Success(rideEstimate)
+                    } else {
+                        _priceCalculationState.value = PriceCalculationState.Error(
+                            rideEstimate.exceptionOrNull()?.message ?: "Um erro desconhecido ocorreu. Reinicie o aplicativo."
+                        )
+                    }
                 },
                 onFailure = { exception ->
-                    _priceCalculationState.value = PriceCalculationState.Error(exception.message ?: "Erro não identificado")
+                    _priceCalculationState.value = PriceCalculationState.Error(exception.message ?: "Falha ao solicitar viagem.")
                 }
             )
         }
@@ -180,7 +189,7 @@ class RideEstimateSharedViewModel @Inject constructor(
         return when {
             origin.isBlank() -> "O endereço de origem não foi preenchido. Preencha o endereço e tente novamente."
             destination.isBlank() -> "O endereço de destino não foi preenchido. Preencha o endereço e tente novamente."
-            userId.isBlank() -> "O id de usuário não foi preenchido. Preencha o id e tente novamente."
+            userId.isBlank() -> "O ID de usuário não foi preenchido. Preencha o ID e tente novamente."
             origin == destination -> "Os endereços de destino de origem e destino não podem ser iguais. Preencha os endereços corretamente e tente novamente."
             else -> null
         }

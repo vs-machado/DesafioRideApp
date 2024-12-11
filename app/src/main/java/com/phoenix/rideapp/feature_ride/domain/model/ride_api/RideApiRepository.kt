@@ -9,12 +9,12 @@ import com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen.RidePric
 interface RideApiRepository {
 
     /**
-     * Retorna as opções de motoristas disponíveis para a viagem e os respectivos custos
+     * Retorna as opções de motoristas disponíveis para a corrida e os respectivos custos
      *
-     * @param customerId ID do cliente que está solicitando a viagem
-     * @param originAddress Endereço de origem da viagem
-     * @param destinationAddress Endereço de destino da viagem
-     * @return Resultado contendo uma lista de opções de viagem disponíveis
+     * @param customerId ID do cliente que está solicitando a corrida
+     * @param originAddress Endereço de origem da corrida
+     * @param destinationAddress Endereço de destino da corrida
+     * @return Resultado contendo uma lista de opções de corrida disponíveis
      */
     suspend fun getRideEstimate(
         customerId: String,
@@ -23,15 +23,15 @@ interface RideApiRepository {
     ): Result<RideEstimate>
 
     /**
-     * Solicita a confirmação da viagem.
+     * Solicita a confirmação da corrida.
      *
-     * @param customerId ID do cliente que está solicitando a viagem
-     * @param destination Endereço do ponto de chegada da viagem
-     * @param distance Distância total da viagem
+     * @param customerId ID do cliente que está solicitando a corrida
+     * @param destination Endereço do ponto de chegada da corrida
+     * @param distance Distância total da corrida
      * @param driver Dados do motorista
-     * @param duration Duração total da viagem
-     * @param origin Endereço do ponto de partida da viagem
-     * @param value Preço da viagem
+     * @param duration Duração total da corrida
+     * @param origin Endereço do ponto de partida da corrida
+     * @param value Preço da corrida
      *
      * @return Retorna se a confirmação foi bem sucedida ou não
      */
