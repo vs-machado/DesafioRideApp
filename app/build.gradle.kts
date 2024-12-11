@@ -84,4 +84,9 @@ dependencies {
     // Dependências Coil
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.core.testing)
 }
