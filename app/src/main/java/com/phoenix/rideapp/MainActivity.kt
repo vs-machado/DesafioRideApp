@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -42,7 +44,12 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.background(MaterialTheme.colorScheme.background)
                     ) {
                         // Tela inicial. Usuário insere o ID de usuário, endereço de origem e destino e solicita o cálculo dos preços da viagem
-                        composable<Home> {
+                        composable<Home> (
+                            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+                            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+                            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+                            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
+                        ) {
                             MainScreen(
                                 viewModel = sharedViewModel,
                                 onNavigateToRidePricingScreen = {
@@ -51,7 +58,12 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         // Tela onde o preço das viagens são exibidos ao usuário
-                        composable<RidePrices> {
+                        composable<RidePrices> (
+                            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+                            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+                            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+                            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
+                        ) {
                             RidePricesScreen(
                                 viewModel = sharedViewModel,
                                 onNavigateToRaceHistoryScreen = { driverId ->
@@ -59,7 +71,12 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
-                        composable<RideHistory> { backStackEntry ->
+                        composable<RideHistory> (
+                            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+                            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+                            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+                            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
+                        ) { backStackEntry ->
                             val driverId: RideHistory = backStackEntry.toRoute()
                             RideHistoryScreen(driverId.id)
                         }
