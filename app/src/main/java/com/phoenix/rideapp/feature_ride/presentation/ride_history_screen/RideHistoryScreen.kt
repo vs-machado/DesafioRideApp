@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
@@ -59,6 +60,7 @@ fun RideHistoryScreen(
         var tempDriverName by remember { mutableStateOf("") }
         var expanded by remember { mutableStateOf(false) }
 
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "Histórico de corridas",
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -69,11 +71,11 @@ fun RideHistoryScreen(
             onValueChange = { userId = it },
             label = { Text("ID de usuário") },
             leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "ID de usuário") },
+            shape = RoundedCornerShape(32.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = { expanded = !expanded }
@@ -86,10 +88,11 @@ fun RideHistoryScreen(
                 modifier = Modifier
                     .menuAnchor()
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(horizontal = 16.dp),
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                 },
+                shape = RoundedCornerShape(32.dp),
                 colors = ExposedDropdownMenuDefaults.textFieldColors()
             )
 
@@ -110,8 +113,9 @@ fun RideHistoryScreen(
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
+
         }
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {
