@@ -121,7 +121,7 @@ fun RidePricesScreen(
         )
         Spacer(modifier = Modifier.padding(8.dp))
         Text(
-            text = "Escolha o motorista: ",
+            text = "Motoristas disponíveis:",
             style = MaterialTheme.typography.titleLarge.copy(
                 fontSize = 18.sp
             ),
