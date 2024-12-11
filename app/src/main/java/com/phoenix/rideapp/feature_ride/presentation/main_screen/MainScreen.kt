@@ -26,6 +26,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -170,8 +171,13 @@ fun MainScreen(
                             onNavigateToRidePricingScreen()
                         } else {
                             Text(
-                                text = "Não há opções de viagem disponíveis para o endereço selecionado. Caso necessário, corrija o endereço e tente novamente.",
-                                modifier = Modifier.padding(horizontal = 24.dp)
+                                text = "Não há motoristas disponíveis para esse endereço." +
+                                        " Corrija o endereço e tente novamente.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color.Red,
+                                modifier = Modifier
+                                    .padding(horizontal = 24.dp)
+                                    .align(Alignment.CenterHorizontally)
                             )
                         }
                     },
