@@ -107,7 +107,7 @@ class RideApiRepositoryImpl @Inject constructor (
                     Result.failure(Exception("Falha ao confirmar corrida."))
                 }
             } else {
-                Result.failure(Exception("Um erro inesperado ocorreu. Reinicie o aplciativo e tente novamnte."))
+                Result.failure(Exception("Um erro inesperado ocorreu. Reinicie o aplicativo e tente novamnte."))
             }
         } catch (e: IOException) {
             Result.failure(Exception("Sem conexão com a internet. Tente novamente."))
@@ -138,27 +138,21 @@ class RideApiRepositoryImpl @Inject constructor (
 
         return try {
             val response = api.getRideHistory(userId, driverId)
+            val responseBody = response.body()
 
-            if(response.isSuccessful) {
-                val responseBody = response.body()
-                if(responseBody != null) {
-                    Result.success(responseBody)
-                } else {
-                    Result.failure(Exception("Nenhuma corrida encontrada."))
-                }
+            if(responseBody != null) {
+                Result.success(responseBody)
             } else {
-                Result.failure(Exception("Um erro inesperado ocorreu. Reinicie o aplicativo e tente novamente."))
+                val errorMessage = when(response.code()){
+                    400 -> "Motorista inválido. Corrija o nome e tente novamente."
+                    404 -> "Nenhuma corrida encontrada para o usuário e motorista selecionado."
+                    500 -> "Um erro de servidor ocorreu. Tente novamente mais tarde."
+                    else -> "Um erro desconhecido ocorreu. Contate a Central de Atendimento."
+                }
+                Result.failure(Exception(errorMessage))
             }
         } catch (e: IOException) {
             Result.failure(Exception("Sem conexão com a internet. Tente novamente."))
-        } catch (e: HttpException) {
-           val errorMessage = when (e.code()) {
-               400 -> "Motorista inválido. Corrija o nome e tente novamente."
-               404 -> "Nenhuma corrida encontrada para o motorista selecionado."
-               500 -> "Um erro de servidor ocorreu. Tente novamente mais tarde."
-               else -> "Um erro desconhecido ocorreu. Contate a Central de Atendimento."
-           }
-            Result.failure(Exception(errorMessage))
         }
     }
 }

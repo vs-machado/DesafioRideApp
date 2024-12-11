@@ -60,6 +60,10 @@ class RideHistoryViewModel @Inject constructor(
         _rideHistoryState.value = RideHistoryState.Idle
     }
 
+    fun setError(message: String) {
+        _rideHistoryState.value = RideHistoryState.Error(message)
+    }
+
 }
 
 // Estado que gerencia o fetching do histórico de viagens do usuário consultado
