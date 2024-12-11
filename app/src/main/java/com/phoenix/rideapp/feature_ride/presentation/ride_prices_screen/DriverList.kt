@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Option
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
-import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideEstimateSharedViewModel
 
 // LazyColumn que exibe a lista de motoristas disponíveis para a viagem.
 @Composable
@@ -61,7 +61,13 @@ fun DriverCard(
     OutlinedCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp)
+            .padding(vertical = 4.dp),
+        colors = CardColors(
+            contentColor = Color.Black,
+            containerColor = Color.White,
+            disabledContainerColor = Color.White,
+            disabledContentColor = Color.Black
+        )
     ) {
         CardContent(
             option = option,

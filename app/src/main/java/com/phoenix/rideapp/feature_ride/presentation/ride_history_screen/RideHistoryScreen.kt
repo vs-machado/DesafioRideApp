@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.phoenix.rideapp.ui.theme.LightGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,7 +94,10 @@ fun RideHistoryScreen(
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                 },
                 shape = RoundedCornerShape(32.dp),
-                colors = ExposedDropdownMenuDefaults.textFieldColors()
+                colors = ExposedDropdownMenuDefaults.textFieldColors(
+                    unfocusedContainerColor = Color.White,
+                    focusedContainerColor = LightGreen
+                )
             )
 
             ExposedDropdownMenu(
