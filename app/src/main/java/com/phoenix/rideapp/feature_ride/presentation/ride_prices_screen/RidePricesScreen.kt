@@ -104,14 +104,11 @@ fun RidePricesScreen(
         Spacer(modifier = Modifier.padding(8.dp))
         Text(
             text = "Percurso da viagem",
-            style = MaterialTheme.typography.titleLarge.copy(
-                fontSize = 18.sp
-            ),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(start = 16.dp, end = 16.dp)
         )
-        Spacer(modifier = Modifier.padding(4.dp))
+        Spacer(modifier = Modifier.padding(12.dp))
         StaticMap(
             mapRes = "640x360",
             encodedPolyline = ridePolyline,
