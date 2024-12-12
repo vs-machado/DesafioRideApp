@@ -1,0 +1,135 @@
+{
+  "customer_id": "CT01",
+  "rides": [
+    {
+      "id": 51,
+      "date": "2024-11-18T09:52:00",
+      "origin": "3802 Verla Glens, 820, Beierbury, 72852-5225",
+      "destination": "973 Lodge Close, 641, Stammcester, 70923-1489",
+      "distance": 89.17796180257355,
+      "duration": "45:22",
+      "driver": {
+        "id": 2,
+        "name": "James Bond"
+      },
+      "value": 333.0661237639809
+    },
+    {
+      "id": 42,
+      "date": "2024-08-29T06:08:35",
+      "origin": "108 Runolfsdottir Springs, 376, Gastonia, 87573-7973",
+      "destination": "9602 Kuhlman Run, 214, South Jarvismouth, 72485-1894",
+      "distance": 66.07057023171889,
+      "duration": "6:18",
+      "driver": {
+        "id": 2,
+        "name": "James Bond"
+      },
+      "value": 152.19154419098876
+    },
+    {
+      "id": 10,
+      "date": "2024-06-01T08:43:37",
+      "origin": "259 Corwin Ford, 211, Deltona, 92670-2558",
+      "destination": "8011 Milford Ridge, 447, Isabelland, 29052-9089",
+      "distance": 31.50468868268267,
+      "duration": "35:29",
+      "driver": {
+        "id": 3,
+        "name": "Dominic Toretto"
+      },
+      "value": 649.9789311195601
+    },
+    {
+      "id": 94,
+      "date": "2024-12-19T17:11:03",
+      "origin": "39506 2nd Street, 536, Lake Madie, 18951",
+      "destination": "56682 Amos Hollow, 136, Torrance, 45748",
+      "distance": 86.33654523178444,
+      "duration": "14:13",
+      "driver": {
+        "id": 2,
+        "name": "Dominic Toretto"
+      },
+      "value": 502.8636765650635
+    },
+    {
+      "id": 91,
+      "date": "2024-05-11T09:38:56",
+      "origin": "94308 Lake Street, 226, Okunevafort, 30242",
+      "destination": "69945 Layne Inlet, 928, Lake Jacksonville, 55328",
+      "distance": 76.28700559083595,
+      "duration": "8:31",
+      "driver": {
+        "id": 2,
+        "name": "James Bond"
+      },
+      "value": 8.552794958620185
+    },
+    {
+      "id": 53,
+      "date": "2024-01-10T12:55:49",
+      "origin": "3635 Orchard Street, 542, East Reva, 88182",
+      "destination": "2216 Giuseppe Wall, 587, Port Glenna, 39948",
+      "distance": 58.66956960646317,
+      "duration": "17:16",
+      "driver": {
+        "id": 2,
+        "name": "James Bond"
+      },
+      "value": 592.3744028261387
+    },
+    {
+      "id": 43,
+      "date": "2024-12-29T02:09:25",
+      "origin": "876 Quinten Street, 511, East Dewitttown, 14858-4778",
+      "destination": "485 S Water Street, 569, West Merritthaven, 92980",
+      "distance": 27.451978134152487,
+      "duration": "12:42",
+      "driver": {
+        "id": 3,
+        "name": "Dominic Toretto"
+      },
+      "value": 739.91116079353
+    },
+    {
+      "id": 47,
+      "date": "2024-12-07T15:25:16",
+      "origin": "13881 Denesik Bypass, 266, East Jeffry, 54653-1234",
+      "destination": "527 Gordon Road, 164, East Itzelmouth, 62832",
+      "distance": 20.920690690482235,
+      "duration": "52:33",
+      "driver": {
+        "id": 2,
+        "name": "Homer Simpson"
+      },
+      "value": 579.9552117897069
+    },
+    {
+      "id": 0,
+      "date": "2024-03-14T11:36:57",
+      "origin": "5219 Wisoky Knolls, 492, Jakubowskiland, 36476",
+      "destination": "93818 Caleb Trail, 156, Fayworth, 53684-9351",
+      "distance": 27.524205781465405,
+      "duration": "7:36",
+      "driver": {
+        "id": 2,
+        "name": "Dominic Toretto"
+      },
+      "value": 549.7854466163279
+    },
+    {
+      "id": 61,
+      "date": "2024-05-19T00:25:26",
+      "origin": "5547 Lucienne Streets, 25, North Rosina, 58262-8297",
+      "destination": "51660 Park Avenue, 138, Suffolk, 97929",
+      "distance": 1.8391583150525914,
+      "duration": "48:41",
+      "driver": {
+        "id": 1,
+        "name": "Dominic Toretto"
+      },
+      "value": 529.8640774033781
+    }
+  ]
+}

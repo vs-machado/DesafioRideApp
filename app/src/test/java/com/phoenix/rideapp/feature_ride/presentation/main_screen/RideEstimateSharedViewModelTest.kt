@@ -169,7 +169,7 @@ class RideEstimateSharedViewModelTest {
 
         advanceUntilIdle()
 
-        // Checa o estado de priceCalculationState apos a chamada do metodo
+        // Checa o estado de rideConfirmationState apos a chamada do metodo
         val state = viewModel.rideConfirmationState.first { it is RideConfirmationState.Success }
 
         assertThat(state).isInstanceOf(RideConfirmationState.Success::class.java)
@@ -195,7 +195,7 @@ class RideEstimateSharedViewModelTest {
 
         advanceUntilIdle()
 
-        // Checa o estado de priceCalculationState apos a chamada do metodo
+        // Checa o estado de rideConfirmationState apos a chamada do metodo
         val state = viewModel.rideConfirmationState.first { it is RideConfirmationState.Error }
 
         assertThat(state).isInstanceOf(RideConfirmationState.Error::class.java)
@@ -224,7 +224,7 @@ class RideEstimateSharedViewModelTest {
 
         advanceUntilIdle()
 
-        // Checa o estado de priceCalculationState apos a chamada do metodo
+        // Checa o estado de rideConfirmationState apos a chamada do metodo
         val state = viewModel.rideConfirmationState.first { it is RideConfirmationState.Error }
 
         assertThat(state).isInstanceOf(RideConfirmationState.Error::class.java)
@@ -253,7 +253,7 @@ class RideEstimateSharedViewModelTest {
 
         advanceUntilIdle()
 
-        // Checa o estado de priceCalculationState apos a chamada do metodo
+        // Checa o estado de rideConfirmationState apos a chamada do metodo
         val state = viewModel.rideConfirmationState.first { it is RideConfirmationState.Error }
 
         assertThat(state).isInstanceOf(RideConfirmationState.Error::class.java)
@@ -263,7 +263,7 @@ class RideEstimateSharedViewModelTest {
     }
 
     // Lê o arquivos Json do diretório resources
-    private fun getJsonContent(fileName: String): String {
+     private fun getJsonContent(fileName: String): String {
         val uri = this.javaClass.classLoader?.getResource(fileName)
         val file = File(uri?.path ?: throw IllegalArgumentException("File not found: $fileName"))
         return file.readText()
