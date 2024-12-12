@@ -1,0 +1,705 @@
+{
+  "origin": {
+    "latitude": -23.5227595,
+    "longitude": -46.666126
+  },
+  "destination": {
+    "latitude": -23.5615351,
+    "longitude": -46.6562816
+  },
+  "distance": 6374,
+  "duration": 1149,
+  "options": [
+    {
+      "id": 1,
+      "name": "Homer Simpson",
+      "description": "Olá! Sou o Homer, seu motorista camarada! Relaxe e aproveite o passeio, com direito a rosquinhas e boas risadas (e talvez alguns desvios).",
+      "vehicle": "Plymouth Valiant 1973 rosa e enferrujado",
+      "review": {
+        "rating": 2,
+        "comment": "Motorista simpático, mas errou o caminho 3 vezes. O carro cheira a donuts."
+      },
+      "value": 15.94
+    },
+    {
+      "id": 2,
+      "name": "Dominic Toretto",
+      "description": "Ei, aqui é o Dom. Pode entrar, vou te levar com segurança e rapidez ao seu destino. Só não mexa no rádio, a playlist é sagrada.",
+      "vehicle": "Dodge Charger R/T 1970 modificado",
+      "review": {
+        "rating": 4,
+        "comment": "Que viagem incrível! O carro é um show à parte e o motorista, apesar de ter uma cara de poucos amigos, foi super gente boa. Recomendo!"
+      },
+      "value": 31.87
+    }
+  ],
+  "routeResponse": {
+    "routes": [
+      {
+        "legs": [
+          {
+            "distanceMeters": 6374,
+            "duration": "1150s",
+            "staticDuration": "1150s",
+            "polyline": {
+              "encodedPolyline": "fhqnChny{GsA|@]Ts@d@u@h@EBE@I?VmCJqAB[BKd@wFPaCBUNiBLaB@OBWBYLmAReCR_C@GPaBB_@PODEDC@ADAFAXGbA\\XFZFv@LlARfBX^HnCb@dAPVDH@b@HdDj@XFZHP@F?R@f@@fC@pB@f@@nB?R?P?|@?vAAX?`A?p@?L?R?R@Z?TBLBtAh@RHDBRJJFf@VjCbAf@RdJrDnFxBXNJDNDJDHBVHPDXHTD@?TDPBTDT@T@P@R@F?H@V?d@@H?L@^@N@L@LBjAPVDHBRFNDLBxC`AzAd@z@XtFfBv@VTFFBLDXFb@J^J`@JJDHD`@LpANh@Jv@FLDL?J@~@Ab@?dB?^At@AjB?j@Ap@?bCCnCAN?L?L?NA\\KNEZK@Ah@S\\KZGJARGVEFC^KF@FAZEL?L?F?H@J@J@HB`@PRLJFFDTPJJJHJHNJHFHDJFPHb@RZLPHn@ZnAf@`A^PFtCfA\\NXJ\\Ln@OJYPg@Nc@@GVu@Ri@HU@EFOFSJSBG?AHS?AFQPi@H]F]D]D_@@Y@u@?CFSOeAG_@HIJKBGHKr@y@NQtAcBFGjAuALMHK`@e@@CVWT[VWHKZ_@d@i@T[FGd@i@\\c@FG^c@bAmAdAmAPUDGf@i@BCt@}@BCRUDGb@k@T[V]dAsAb@e@FGjAmA@CjBwBo@q@CCo@q@k@o@ECSUGGKKm@t@CDIHUXCD"
+            },
+            "startLocation": {
+              "latLng": {
+                "latitude": -23.5227595,
+                "longitude": -46.666126
+              }
+            },
+            "endLocation": {
+              "latLng": {
+                "latitude": -23.5615351,
+                "longitude": -46.6562816
+              }
+            },
+            "steps": [
+              {
+                "distanceMeters": 161,
+                "staticDuration": "29s",
+                "polyline": {
+                  "encodedPolyline": "fhqnChny{GsA|@]Ts@d@u@h@EBE@I?"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5227595,
+                    "longitude": -46.666126
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5215545,
+                    "longitude": -46.666976999999996
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "DEPART",
+                  "instructions": "Siga para noroeste na Av. Thomas Edison em direção a R. Gaspar Ricardo Júnior"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,2 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 730,
+                "staticDuration": "145s",
+                "polyline": {
+                  "encodedPolyline": "t`qnCrsy{GVmCJqAB[BKd@wFPaCBUNiBLaB@OBWBYLmAReCR_C@GPaBB_@"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5215545,
+                    "longitude": -46.666976999999996
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5226594,
+                    "longitude": -46.659924
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "TURN_RIGHT",
+                  "instructions": "Vire à direita em direção a Av. Marquês de São Vicente"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,7 km"
+                  },
+                  "staticDuration": {
+                    "text": "2 minutos"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 150,
+                "staticDuration": "20s",
+                "polyline": {
+                  "encodedPolyline": "rgqnCngx{GPODEDC@ADAFAXGbA\\XFZFv@L"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5226594,
+                    "longitude": -46.659924
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.523907299999998,
+                    "longitude": -46.6600246
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "TURN_RIGHT",
+                  "instructions": "Vire à direita em direção a Av. Dr. Abraão Ribeiro (indicações para R. Da Varzea/Mem. Am. Latina)"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,2 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 411,
+                "staticDuration": "40s",
+                "polyline": {
+                  "encodedPolyline": "loqnCbhx{GlARfBX^HnCb@dAPVDH@b@HdDj@XFZH"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.523907299999998,
+                    "longitude": -46.6600246
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5274984,
+                    "longitude": -46.6609658
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "TURN_LEFT",
+                  "instructions": "Mantenha-se à esquerda para continuar na Av. Dr. Abraão Ribeiro/Saida do Viaduto Pacaembu/Vd. Pacaembu Dr. Dermeval Gonçalves\nContinue a seguir Av. Dr. Abraão Ribeiro/Saida do Viaduto Pacaembu"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,4 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 1815,
+                "staticDuration": "266s",
+                "polyline": {
+                  "encodedPolyline": "zernC`nx{GP@F?R@f@@fC@pB@f@@nB?R?P?|@?vAAX?`A?p@?L?R?R@Z?TBLBtAh@RHDBRJJFf@VjCbAf@RdJrDnFxBXNJDNDJDHBVHPDXHTD@?TDPBTDT@T@P@R@F?H@V?d@@H?L@^@N@L@LBjAPVDHBRFNDLBxC`AzAd@z@XtFfB"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5274984,
+                    "longitude": -46.6609658
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5430094,
+                    "longitude": -46.6654704
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "TURN_LEFT",
+                  "instructions": "Mantenha-se à esquerda para continuar na Av. Pacaembu/Praça David Raw\nContinue a seguir Av. Pacaembu\nPasse por Coelho da Fonseca Empreendimentos Imobiliários (à direita em 1,4 km)"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "1,8 km"
+                  },
+                  "staticDuration": {
+                    "text": "4 minutos"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 95,
+                "staticDuration": "31s",
+                "polyline": {
+                  "encodedPolyline": "xfunCdjy{Gv@VTFFBLDXFb@J"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5430094,
+                    "longitude": -46.6654704
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5438163,
+                    "longitude": -46.6657823
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "NAME_CHANGE",
+                  "instructions": "Continue até Praça Charles Miller"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,1 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 119,
+                "staticDuration": "31s",
+                "polyline": {
+                  "encodedPolyline": "zkunCbly{G^J`@JJDHD`@LpAN"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5438163,
+                    "longitude": -46.6657823
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.544835799999998,
+                    "longitude": -46.6661108
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "TURN_RIGHT",
+                  "instructions": "Mantenha-se à direita para continuar na Praça Charles Miller"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,1 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 64,
+                "staticDuration": "12s",
+                "polyline": {
+                  "encodedPolyline": "frunCdny{Gh@Jv@FLD"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.544835799999998,
+                    "longitude": -46.6661108
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5454015,
+                    "longitude": -46.6662355
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "NAME_CHANGE",
+                  "instructions": "Continue até Praça Raul de Campos Mello"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "64 m"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 440,
+                "staticDuration": "50s",
+                "polyline": {
+                  "encodedPolyline": "vuunC~ny{GL?J@~@Ab@?dB?^At@AjB?j@Ap@?bCCnCA"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5454015,
+                    "longitude": -46.6662355
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.549355199999997,
+                    "longitude": -46.666179899999996
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "NAME_CHANGE",
+                  "instructions": "Continue até R. Des. Paulo Passaláqua"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,4 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 285,
+                "staticDuration": "26s",
+                "polyline": {
+                  "encodedPolyline": "nnvnCrny{GN?L?L?NA\\KNEZK@Ah@S\\KZGJARGVEFC^KF@FAZEL?L?F?H@J@J@HB`@P"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.549355199999997,
+                    "longitude": -46.666179899999996
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5518063,
+                    "longitude": -46.6657564
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "NAME_CHANGE",
+                  "instructions": "Continue até Praça Helena Sgarbi Salto"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,3 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 162,
+                "staticDuration": "14s",
+                "polyline": {
+                  "encodedPolyline": "x}vnC~ky{GRLJFFDTPJJJHJHNJHFHDJFPHb@RZLPH"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5518063,
+                    "longitude": -46.6657564
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5530367,
+                    "longitude": -46.666587899999996
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "NAME_CHANGE",
+                  "instructions": "Continue até R. Itajobi"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,2 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 274,
+                "staticDuration": "64s",
+                "polyline": {
+                  "encodedPolyline": "newnCdqy{Gn@ZnAf@`A^PFtCfA\\NXJ\\L"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5530367,
+                    "longitude": -46.666587899999996
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5552845,
+                    "longitude": -46.6676978
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "NAME_CHANGE",
+                  "instructions": "Continue até R. Maj. Natanael"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,3 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 157,
+                "staticDuration": "38s",
+                "polyline": {
+                  "encodedPolyline": "nswnCbxy{Gn@OJYPg@Nc@@GVu@Ri@HU"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5552845,
+                    "longitude": -46.6676978
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.556029199999998,
+                    "longitude": -46.6664783
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "TURN_LEFT",
+                  "instructions": "Vire à esquerda em direção a Av. Dr. Arnaldo"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,2 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 206,
+                "staticDuration": "38s",
+                "polyline": {
+                  "encodedPolyline": "dxwnCnpy{G@EFOFSJSBG?AHS?AFQPi@H]F]D]D_@@Y@u@?CFS"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.556029199999998,
+                    "longitude": -46.6664783
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5565915,
+                    "longitude": -46.6645754
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "TURN_LEFT",
+                  "instructions": "Mantenha-se à esquerda para continuar na Viaduto Okuhara Koei"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,2 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 53,
+                "staticDuration": "11s",
+                "polyline": {
+                  "encodedPolyline": "t{wnCrdy{GOeAG_@"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5565915,
+                    "longitude": -46.6645754
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.556469099999997,
+                    "longitude": -46.6640723
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "MERGE",
+                  "instructions": "Convergir com Av. Rebouças"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "53 m"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 1035,
+                "staticDuration": "254s",
+                "polyline": {
+                  "encodedPolyline": "|zwnClay{GHIJKBGHKr@y@NQtAcBFGjAuALMHK`@e@@CVWT[VWHKZ_@d@i@T[FGd@i@\\c@FG^c@bAmAdAmAPUDGf@i@BCt@}@BCRUDGb@k@T[V]dAsAb@e@FGjAmA@CjBwB"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.556469099999997,
+                    "longitude": -46.6640723
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.562922399999998,
+                    "longitude": -46.656760399999996
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "TURN_RIGHT",
+                  "instructions": "Vire à direita em direção a Alameda Santos\nPasse por Ed. Flávio Pentagna Guimarāes (à direita)"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "1,0 km"
+                  },
+                  "staticDuration": {
+                    "text": "4 minutos"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 131,
+                "staticDuration": "52s",
+                "polyline": {
+                  "encodedPolyline": "fcynCvsw{Go@q@CCo@q@k@o@ECSU"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.562922399999998,
+                    "longitude": -46.656760399999996
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5620695,
+                    "longitude": -46.6558701
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "TURN_LEFT",
+                  "instructions": "Vire à esquerda em direção a Alameda Casa Branca"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "0,1 km"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              },
+              {
+                "distanceMeters": 86,
+                "staticDuration": "29s",
+                "polyline": {
+                  "encodedPolyline": "|}xnCdnw{GGGKKm@t@CDIHUXCD"
+                },
+                "startLocation": {
+                  "latLng": {
+                    "latitude": -23.5620695,
+                    "longitude": -46.6558701
+                  }
+                },
+                "endLocation": {
+                  "latLng": {
+                    "latitude": -23.5615351,
+                    "longitude": -46.6562816
+                  }
+                },
+                "navigationInstruction": {
+                  "maneuver": "TURN_LEFT",
+                  "instructions": "Vire à esquerda em direção a Av. Paulista\nEncerrada Domingos entre as 10:00 – 19:00\nO destino encontra-se à direita"
+                },
+                "localizedValues": {
+                  "distance": {
+                    "text": "86 m"
+                  },
+                  "staticDuration": {
+                    "text": "1 min"
+                  }
+                },
+                "travelMode": "DRIVE"
+              }
+            ],
+            "localizedValues": {
+              "distance": {
+                "text": "6,4 km"
+              },
+              "duration": {
+                "text": "19 minutos"
+              },
+              "staticDuration": {
+                "text": "19 minutos"
+              }
+            }
+          }
+        ],
+        "distanceMeters": 6374,
+        "duration": "1149s",
+        "staticDuration": "1149s",
+        "polyline": {
+          "encodedPolyline": "fhqnChny{GsA|@]Ts@d@u@h@EBE@I?VmCJqAB[BKd@wFPaCBUNiBLaB@OBWBYLmAReCR_C@GPaBB_@PODEDC@ADAFAXGbA\\XFZFv@LlARfBX^HnCb@dAPVDH@b@HdDj@XFZHP@F?R@f@@fC@pB@f@@nB?R?P?|@?vAAX?`A?p@?L?R?R@Z?TBLBtAh@RHDBRJJFf@VjCbAf@RdJrDnFxBXNJDNDJDHBVHPDXHTD@?TDPBTDT@T@P@R@F?H@V?d@@H?L@^@N@L@LBjAPVDHBRFNDLBxC`AzAd@z@XtFfBv@VTFFBLDXFb@J^J`@JJDHD`@LpANh@Jv@FLDL?J@~@Ab@?dB?^At@AjB?j@Ap@?bCCnCAN?L?L?NA\\KNEZK@Ah@S\\KZGJARGVEFC^KF@FAZEL?L?F?H@J@J@HB`@PRLJFFDTPJJJHJHNJHFHDJFPHb@RZLPHn@ZnAf@`A^PFtCfA\\NXJ\\Ln@OJYPg@Nc@@GVu@Ri@HU@EFOFSJSBG?AHS?AFQPi@H]F]D]D_@@Y@u@?CFSOeAG_@HIJKBGHKr@y@NQtAcBFGjAuALMHK`@e@@CVWT[VWHKZ_@d@i@T[FGd@i@\\c@FG^c@bAmAdAmAPUDGf@i@BCt@}@BCRUDGb@k@T[V]dAsAb@e@FGjAmA@CjBwBo@q@CCo@q@k@o@ECSUGGKKm@t@CDIHUXCD"
+        },
+        "description": "Av. Pacaembu",
+        "warnings": [
+          "Este trajeto inclui estradas restritas mediante a matrícula."
+        ],
+        "viewport": {
+          "low": {
+            "latitude": -23.562922399999998,
+            "longitude": -46.6676978
+          },
+          "high": {
+            "latitude": -23.5215545,
+            "longitude": -46.6557734
+          }
+        },
+        "travelAdvisory": {},
+        "localizedValues": {
+          "distance": {
+            "text": "6,4 km"
+          },
+          "duration": {
+            "text": "19 minutos"
+          },
+          "staticDuration": {
+            "text": "19 minutos"
+          }
+        },
+        "routeLabels": [
+          "DEFAULT_ROUTE"
+        ],
+        "polylineDetails": {}
+      }
+    ],
+    "geocodingResults": {
+      "origin": {
+        "geocoderStatus": {},
+        "type": [
+          "street_address"
+        ],
+        "placeId": "ChIJLZha0ABYzpQRwGdHHfimUBk"
+      },
+      "destination": {
+        "geocoderStatus": {},
+        "type": [
+          "street_address"
+        ],
+        "placeId": "ChIJvS4WJslZzpQRfufYwqjow_Y"
+      }
+    }
+  }
+}

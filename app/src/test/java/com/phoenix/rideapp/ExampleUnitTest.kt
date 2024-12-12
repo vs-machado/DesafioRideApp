@@ -1,4 +1,4 @@
-package com.phoenix.travelapp
+package com.phoenix.rideapp
 
 import org.junit.Test
 

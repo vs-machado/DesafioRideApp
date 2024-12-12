@@ -1,3 +1,63 @@
 <resources>
-    <string name="app_name">Travel App</string>
+    <string name="app_name">Ride App</string>
+    <string name="app_logo_description">Logomarca do aplicativo</string>
+    <string name="greeting_title">Olá, passageiro!</string>
+    <string name="greeting_subtitle">Insira os dados para solicitar uma viagem.</string>
+    <string name="ride_data">Dados da viagem</string>
+    <string name="user_id">ID de usuário</string>
+    <string name="origin_address">Endereço de origem</string>
+    <string name="destination_address">Endereço do destino</string>
+    <string name="request_ride">Solicitar viagem</string>
+    <string name="calculating_price">Calculando o preço da viagem…</string>
+    <string name="no_drivers_available">Não há motoristas disponíveis para esse endereço. Corrija o endereço e tente novamente.</string>
+    <string name="ride_history">Histórico de corridas</string>
+    <string name="user_id_label">ID de usuário</string>
+    <string name="select_driver">Selecione um motorista</string>
+    <string name="all_drivers">Todos os motoristas</string>
+    <string name="check_rides">Consultar corridas realizadas</string>
+    <string name="error_empty_user_id_field">O campo ID de usuário deve ser preenchido.</string>
+    <string name="no_rides_found">Nenhuma corrida encontrada para o respectivo motorista.</string>
+    <string name="driver_photo_content_description">Foto do motorista</string>
+    <string name="origin_point_content_description">Ponto de origem</string>
+    <string name="destination_point_content_description">Ponto de destino</string>
+    <string name="ride_value">Valor da corrida: $%.2f</string>
+    <string name="ride_distance">Distância percorrida: %.2f km</string>
+    <string name="ride_duration">Duração da corrida: %s</string>
+    <string name="ride_route">Percurso da viagem</string>
+    <string name="available_drivers">Motoristas disponíveis:</string>
+    <string name="ride_confirmed_success">Viagem confirmada com sucesso!</string>
+    <string name="route_map_description">Mapa do percurso</string>
+    <string name="driver_photo">Foto do motorista</string>
+    <string name="car_icon">Ícone de carro</string>
+    <string name="star_icon">Ícone de estrela</string>
+    <string name="driver_rating">Avaliação: %1$s/5</string>
+    <string name="ride_price">Preço: $%1$s</string>
+    <string name="choose_driver">Escolher</string>
+
+    <!-- Mensagens de erro da RideEstimateSharedViewModel -->
+    <string name="error_unknown">Um erro desconhecido ocorreu. Reinicie o aplicativo.</string>
+    <string name="error_ride_request_failed">Falha ao solicitar corrida.</string>
+    <string name="error_ride_confirmation_failed">Falha ao confirmar corrida.</string>
+
+    <!-- Mensagens de validação de input da RideEstimateSharedViewModel -->
+    <string name="error_empty_origin">O endereço de origem não foi preenchido. Preencha o endereço e tente novamente.</string>
+    <string name="error_empty_destination">O endereço de destino não foi preenchido. Preencha o endereço e tente novamente.</string>
+    <string name="error_empty_user_id">O ID de usuário não foi preenchido. Preencha o ID e tente novamente.</string>
+    <string name="error_same_addresses">Os endereços de destino de origem e destino não podem ser iguais. Preencha os endereços corretamente e tente novamente.</string>
+
+    <!-- Mensagens de erro da RideEstimateSharedViewModel -->
+    <string name="error_fetch_history">Erro ao buscar histórico de corridas</string>
+
+    <!-- Mensagens de erro da RideApiRepository -->
+    <string name="error_unexpected">Um erro inesperado ocorreu. Reinicie o aplicativo e tente novamente.</string>
+    <string name="error_no_internet">Sem conexão com a internet. Tente novamente.</string>
+    <string name="error_invalid_data">Dados inválidos. Corrija os dados e tente novamente.</string>
+    <string name="error_server">Um erro de servidor ocorreu. Tente novamente mais tarde.</string>
+    <string name="error_invalid_driver">Motorista inválido. Corrija o nome e tente novamente.</string>
+    <string name="error_no_rides_found">Nenhuma corrida encontrada para o usuário e motorista selecionado.</string>
+    <string name="error_invalid_provided_data">Os dados fornecidos são inválidos.</string>
+    <string name="error_driver_selection_failed">Falha ao selecionar motorista. Selecione outro motorista disponível.</string>
+    <string name="error_invalid_mileage">Quilometragem inválida para o motorista selecionado.</string>
+    <string name="error_request_ride_failed">Falha ao solicitar corrida.</string>
+    <string name="error_contact_support">Um erro desconhecido ocorreu. Contate a Central de Atendimento.</string>
 </resources>
