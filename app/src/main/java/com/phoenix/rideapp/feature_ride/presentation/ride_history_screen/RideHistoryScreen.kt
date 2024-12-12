@@ -32,10 +32,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.phoenix.rideapp.R
 import com.phoenix.rideapp.feature_ride.domain.util.debounceHandler
 import com.phoenix.rideapp.ui.theme.LightGreen
 import com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
@@ -57,6 +60,7 @@ fun RideHistoryScreen(
     viewModel: RideHistoryViewModel = hiltViewModel()
 ) {
     val rideHistoryState by viewModel.rideHistoryState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -75,15 +79,15 @@ fun RideHistoryScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Histórico de corridas",
+            text = stringResource(R.string.ride_history),
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = userId,
             onValueChange = { userId = it },
-            label = { Text("ID de usuário") },
-            leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "ID de usuário") },
+            label = { Text(stringResource(R.string.user_id_label)) },
+            leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = stringResource(R.string.user_id_label)) },
             shape = RoundedCornerShape(32.dp),
             modifier = Modifier
                 .fillMaxWidth()
@@ -97,7 +101,7 @@ fun RideHistoryScreen(
             OutlinedTextField(
                 value = tempDriverName,
                 onValueChange = {},
-                label = { Text("Selecione um motorista") },
+                label = { Text(stringResource(R.string.select_driver)) },
                 readOnly = true,
                 modifier = Modifier
                     .menuAnchor()
@@ -140,7 +144,7 @@ fun RideHistoryScreen(
                     selectedDriverName = tempDriverName
                     viewModel.fetchRaceHistory(userId, driverId = driverId)
                 } else {
-                    viewModel.setError("O campo ID de usuário deve ser preenchido.")
+                    viewModel.setError(context.getString(R.string.error_empty_user_id_field))
                 }
             },
             modifier = Modifier
@@ -148,7 +152,7 @@ fun RideHistoryScreen(
                 .height(56.dp) // Corresponde a altura dos textfields
                 .padding(horizontal = 16.dp)
         ) {
-            Text("Consultar corridas realizadas")
+            Text(stringResource(R.string.check_rides))
         }
 
         when(rideHistoryState) {
@@ -189,7 +193,7 @@ fun RideHistoryScreen(
                     } else {
                         Spacer(modifier = Modifier.height(24.dp))
                         Text(
-                            text = "Nenhuma corrida encontrada para o respectivo motorista.",
+                            text = stringResource(R.string.no_rides_found),
                             color = Color.Red,
                             style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier

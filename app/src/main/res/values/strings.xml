@@ -10,6 +10,13 @@
     <string name="request_ride">Solicitar viagem</string>
     <string name="calculating_price">Calculando o preço da viagem…</string>
     <string name="no_drivers_available">Não há motoristas disponíveis para esse endereço. Corrija o endereço e tente novamente.</string>
+    <string name="ride_history">Histórico de corridas</string>
+    <string name="user_id_label">ID de usuário</string>
+    <string name="select_driver">Selecione um motorista</string>
+    <string name="all_drivers">Todos os motoristas</string>
+    <string name="check_rides">Consultar corridas realizadas</string>
+    <string name="error_empty_user_id_field">O campo ID de usuário deve ser preenchido.</string>
+    <string name="no_rides_found">Nenhuma corrida encontrada para o respectivo motorista.</string>
 
     <!-- Mensagens de erro da RideEstimateSharedViewModel -->
     <string name="error_unknown">Um erro desconhecido ocorreu. Reinicie o aplicativo.</string>
@@ -21,4 +28,7 @@
     <string name="error_empty_destination">O endereço de destino não foi preenchido. Preencha o endereço e tente novamente.</string>
     <string name="error_empty_user_id">O ID de usuário não foi preenchido. Preencha o ID e tente novamente.</string>
     <string name="error_same_addresses">Os endereços de destino de origem e destino não podem ser iguais. Preencha os endereços corretamente e tente novamente.</string>
+
+    <!-- Mensagens de erro da RideEstimateSharedViewModel -->
+    <string name="error_fetch_history">Erro ao buscar histórico de corridas</string>
 </resources>
