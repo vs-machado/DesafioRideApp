@@ -2,6 +2,8 @@ package com.phoenix.rideapp.feature_ride.presentation.ride_history_screen
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
+import com.phoenix.rideapp.core.helpers.FakeLocationHelperImpl
+import com.phoenix.rideapp.core.helpers.LocationHelper
 import com.phoenix.rideapp.feature_ride.data.api.RideApiService
 import com.phoenix.rideapp.feature_ride.data.repository.RideApiRepositoryImpl
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideApiRepository
@@ -37,7 +39,7 @@ class RideHistoryViewModelTest {
     private lateinit var mockWebServer: MockWebServer
     private lateinit var viewModel: RideHistoryViewModel
     private lateinit var rideApiRepository: RideApiRepository
-
+    private lateinit var locationHelper: LocationHelper
 
     @Before
     fun setUp() {
@@ -50,8 +52,10 @@ class RideHistoryViewModelTest {
             .build()
             .create(RideApiService::class.java)
 
-        rideApiRepository = RideApiRepositoryImpl(rideApi)
-        viewModel = RideHistoryViewModel(rideApiRepository)
+        locationHelper = FakeLocationHelperImpl()
+
+        rideApiRepository = RideApiRepositoryImpl(rideApi, locationHelper)
+        viewModel = RideHistoryViewModel(rideApiRepository, locationHelper)
     }
 
 

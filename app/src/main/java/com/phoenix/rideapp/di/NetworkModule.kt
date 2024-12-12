@@ -1,7 +1,9 @@
 package com.phoenix.rideapp.di
 
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.google.gson.Strictness
+import com.phoenix.rideapp.core.helpers.LocationHelper
 import com.phoenix.rideapp.feature_ride.data.api.RIDE_API_BASE_URL
 import com.phoenix.rideapp.feature_ride.data.api.RideApiService
 import com.phoenix.rideapp.feature_ride.data.repository.RideApiRepositoryImpl
@@ -9,6 +11,7 @@ import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideApiRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -61,8 +64,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRideRepository(
-        rideApiService: RideApiService
+        rideApiService: RideApiService,
+        locationHelper: LocationHelper
     ): RideApiRepository {
-        return RideApiRepositoryImpl(rideApiService)
+        return RideApiRepositoryImpl(rideApiService, locationHelper)
     }
 }

@@ -36,8 +36,8 @@
 
     <!-- Mensagens de erro da RideEstimateSharedViewModel -->
     <string name="error_unknown">Um erro desconhecido ocorreu. Reinicie o aplicativo.</string>
-    <string name="error_ride_request_failed">Falha ao solicitar viagem.</string>
-    <string name="error_ride_confirmation_failed">Falha ao confirmar viagem.</string>
+    <string name="error_ride_request_failed">Falha ao solicitar corrida.</string>
+    <string name="error_ride_confirmation_failed">Falha ao confirmar corrida.</string>
 
     <!-- Mensagens de validação de input da RideEstimateSharedViewModel -->
     <string name="error_empty_origin">O endereço de origem não foi preenchido. Preencha o endereço e tente novamente.</string>
@@ -47,4 +47,17 @@
 
     <!-- Mensagens de erro da RideEstimateSharedViewModel -->
     <string name="error_fetch_history">Erro ao buscar histórico de corridas</string>
+
+    <!-- Mensagens de erro da RideApiRepository -->
+    <string name="error_unexpected">Um erro inesperado ocorreu. Reinicie o aplicativo e tente novamente.</string>
+    <string name="error_no_internet">Sem conexão com a internet. Tente novamente.</string>
+    <string name="error_invalid_data">Dados inválidos. Corrija os dados e tente novamente.</string>
+    <string name="error_server">Um erro de servidor ocorreu. Tente novamente mais tarde.</string>
+    <string name="error_invalid_driver">Motorista inválido. Corrija o nome e tente novamente.</string>
+    <string name="error_no_rides_found">Nenhuma corrida encontrada para o usuário e motorista selecionado.</string>
+    <string name="error_invalid_provided_data">Os dados fornecidos são inválidos.</string>
+    <string name="error_driver_selection_failed">Falha ao selecionar motorista. Selecione outro motorista disponível.</string>
+    <string name="error_invalid_mileage">Quilometragem inválida para o motorista selecionado.</string>
+    <string name="error_request_ride_failed">Falha ao solicitar corrida.</string>
+    <string name="error_contact_support">Um erro desconhecido ocorreu. Contate a Central de Atendimento.</string>
 </resources>

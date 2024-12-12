@@ -1,25 +1,32 @@
 package com.phoenix.rideapp.feature_ride.data.repository
 
-import retrofit2.HttpException
+import com.phoenix.rideapp.core.helpers.LocationHelper
 import com.phoenix.rideapp.feature_ride.data.api.RideApiService
 import com.phoenix.rideapp.feature_ride.data.api.RideEstimateRequest
 import com.phoenix.rideapp.feature_ride.domain.model.common.Driver
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideRequest
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideResponse
-import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideHistoryResponse
-import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideApiRepository
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
+import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideHistoryResponse
 import com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
+import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
 /**
- * Implementação do repositório para acessar a API de serviços de corrida
+ * Implementação do repositório para acessar a API de serviços de corrida.
+ * LocationHelper é utilizada para abstrair o uso do context no metodo getString
+ * para não prejudicar a testabilidade.
  *
  * @see [RideApiRepository]
+ *
+ * @property api Api de solicitação de corridas
+ * @property locationHelper Interface que abstrai o uso do context
  */
 class RideApiRepositoryImpl @Inject constructor (
-    private val api: RideApiService
+    private val api: RideApiService,
+    private val locationHelper: LocationHelper
 ): RideApiRepository {
 
     /**
@@ -46,18 +53,18 @@ class RideApiRepositoryImpl @Inject constructor (
                 if(responseBody != null) {
                     Result.success(responseBody)
                 } else {
-                    Result.failure(Exception("Falha ao solicitar corrida."))
+                    Result.failure(Exception(locationHelper.getErrorRideRequestFailed()))
                 }
             } else {
-                Result.failure(Exception("Um erro inesperado ocorreu. Reinicie o aplicativo e tente novamente."))
+                Result.failure(Exception(locationHelper.getErrorUnexpected()))
             }
         } catch (e: IOException) {
-            Result.failure(Exception("Sem conexão com a internet. Tente novamente."))
+            Result.failure(Exception(locationHelper.getErrorNoInternet()))
         } catch (e: HttpException) {
             val errorMessage = when(e.code()){
-                400 -> "Dados inválidos. Corrija os dados e tente novamente."
-                500 -> "Um erro de servidor ocorreu. Tente novamente mais tarde."
-                else -> "Um erro desconhecido ocorreu. Contate a Central de Atendimento."
+                400 -> locationHelper.getErrorInvalidData()
+                500 -> locationHelper.getErrorServer()
+                else -> locationHelper.getErrorContactSupport()
             }
             Result.failure(Exception(errorMessage))
         }
@@ -103,15 +110,15 @@ class RideApiRepositoryImpl @Inject constructor (
                 Result.success(responseBody)
             } else {
                 val errorMessage = when(response.code()) {
-                    400 -> "Os dados fornecidos são inválidos."
-                    404 -> "Falha ao selecionar motorista. Selecione outro motorista disponível."
-                    406 -> "Quilometragem inválida para o motorista selecionado."
-                    else -> "Um erro inesperado ocorreu. Reinicie o aplicativo e tente novamente."
+                    400 ->  locationHelper.getErrorInvalidProvidedData()
+                    404 ->  locationHelper.getErrorDriverSelectionFailed()
+                    406 -> locationHelper.getErrorInvalidMileage()
+                    else -> locationHelper.getErrorUnexpected()
                 }
                 Result.failure(Exception(errorMessage))
             }
         } catch (e: IOException) {
-            Result.failure(Exception("Sem conexão com a internet. Tente novamente."))
+            Result.failure(Exception(locationHelper.getErrorNoInternet()))
         }
     }
 
@@ -136,15 +143,15 @@ class RideApiRepositoryImpl @Inject constructor (
                 Result.success(responseBody)
             } else {
                 val errorMessage = when(response.code()){
-                    400 -> "Motorista inválido. Corrija o nome e tente novamente."
-                    404 -> "Nenhuma corrida encontrada para o usuário e motorista selecionado."
-                    500 -> "Um erro de servidor ocorreu. Tente novamente mais tarde."
-                    else -> "Um erro desconhecido ocorreu. Contate a Central de Atendimento."
+                    400 ->locationHelper.getErrorInvalidDriver()
+                    404 ->  locationHelper.getErrorNoRidesFound()
+                    500 ->  locationHelper.getErrorServer()
+                    else -> locationHelper.getErrorContactSupport()
                 }
                 Result.failure(Exception(errorMessage))
             }
         } catch (e: IOException) {
-            Result.failure(Exception("Sem conexão com a internet. Tente novamente."))
+            Result.failure(Exception(locationHelper.getErrorNoInternet()))
         }
     }
 }
