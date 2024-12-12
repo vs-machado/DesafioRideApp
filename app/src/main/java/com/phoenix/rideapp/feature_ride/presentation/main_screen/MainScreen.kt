@@ -1,6 +1,7 @@
 package com.phoenix.rideapp.feature_ride.presentation.main_screen
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -35,9 +36,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.phoenix.rideapp.R
 import com.phoenix.rideapp.feature_ride.domain.util.debounceHandler
 import com.phoenix.rideapp.ui.theme.WhiteSnow
 
@@ -82,9 +85,14 @@ fun MainScreen(
     Column (
         modifier = Modifier
             .systemBarsPadding(),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.rideapp_logo),
+            contentDescription = "Logomarca do aplicativo",
+            modifier = Modifier
+                .height(142.dp)
+        )
         Text(
             text = "Olá, passageiro!",
             modifier = Modifier.padding(horizontal = 32.dp),
