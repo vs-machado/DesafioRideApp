@@ -2,7 +2,6 @@ package com.phoenix.rideapp.feature_ride.presentation.main_screen
 
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,11 +42,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.phoenix.rideapp.R
 import com.phoenix.rideapp.feature_ride.domain.util.debounceHandler
 import com.phoenix.rideapp.ui.theme.WhiteSnow
+import com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
 
 /**
  * A main screen é responsável por fornecer ao usuário a interface de solicitação de viagens.
  * Nela, o usuário preenche o id de usuário, endereço de origem e destino. Ao clicar no botão "Solicitar viagem",
- * o usuário é redirecionado para a TravelRequestScreen.
+ * o usuário é redirecionado para a RidePricesScreen.
+ *
+ * @param viewModel SharedViewModel contendo a lógica do cálculo e confirmação da viagem
+ * @param onNavigateToRidePricingScreen Callback para navegar para a [RidePricesScreen]
  */
 @Composable
 fun MainScreen(

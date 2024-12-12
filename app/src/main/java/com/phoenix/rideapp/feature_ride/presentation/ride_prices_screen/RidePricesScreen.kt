@@ -32,11 +32,16 @@ import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideConfirmatio
 import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideEstimateSharedViewModel
 import kotlinx.coroutines.delay
 import java.net.URLEncoder
+import com.phoenix.rideapp.feature_ride.presentation.ride_history_screen.RideHistoryScreen
 
 /**
  * Tela de exibição das opções de corrida.
- * Exibe o percurso da viagem e as opções de motoristas disponíveis.
- * Ao selecionar um motorista, um floating action button é exibido para confirmar a corrida.
+ * Exibe o percurso da corrida e as opções de motoristas disponíveis.
+ * Ao selecionar um motorista, a API retorna se a quilometragem da corrida é válida para o motorista
+ * selecionado e navega para a próxima tela.
+ *
+ * @param viewModel SharedViewModel contendo a lógica do cálculo e confirmação da viagem
+ * @param onNavigateToRaceHistoryScreen  Callback para navegar para a [RideHistoryScreen]
  */
 @Composable
 fun RidePricesScreen(

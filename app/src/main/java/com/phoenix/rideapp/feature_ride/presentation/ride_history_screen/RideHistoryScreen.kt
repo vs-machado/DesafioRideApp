@@ -38,7 +38,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.phoenix.rideapp.feature_ride.domain.util.debounceHandler
 import com.phoenix.rideapp.ui.theme.LightGreen
+import com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
 
+/**
+ * Tela que exibe o histórico de corridas correspondentes para um dado usuário.
+ * O histórico de corridas é exibido quando um id válido é inserido pelo usuário.
+ *
+ * As corridas são exibidas em ordem cronológica (mais recentes) e podem ser filtradas ao
+ * selecionar um motorista em específico.
+ *
+ * @param driverId Id do motorista selecionado na [RidePricesScreen]
+ * @param viewModel ViewModel contendo a lógica do fetching do histórico de corridas
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RideHistoryScreen(
