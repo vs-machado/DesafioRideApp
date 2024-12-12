@@ -21,5 +21,5 @@
 </ul>
 
 <h2>Realizando mudanças</h2>
-Uma API key do Google Static Maps API é necessária para realizar mudanças no projeto.<br> O projeto utiliza o Secrets Gradle Plugin para a inserção da chave no projeto. <br>Insira a chave na última linha do arquivo local.properties da seguinte maneira: <br><br>
+Uma API key do Google Maps Static API é necessária para realizar mudanças no projeto.<br> O projeto utiliza o Secrets Gradle Plugin para a inserção da chave no projeto. <br>Insira a chave na última linha do arquivo local.properties da seguinte maneira: <br><br>
 gMapsApiKey=[SUA API KEY AQUI]<br><br> e clique em Make project.<br>
