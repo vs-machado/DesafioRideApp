@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -102,53 +103,67 @@ fun RidePricesScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .systemBarsPadding()
-    ) {
-        Spacer(modifier = Modifier.padding(8.dp))
-        Text(
-            text =  stringResource(R.string.ride_route),
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(start = 16.dp, end = 16.dp)
-        )
-        Spacer(modifier = Modifier.padding(12.dp))
-        StaticMap(
-            mapRes = "640x360",
-            encodedPolyline = ridePolyline,
-            startLatLng = startLatLng,
-            endLatLng = endLatLng,
-            apiKey = BuildConfig.gMapsApiKey
-        )
-        Spacer(modifier = Modifier.padding(8.dp))
-        Text(
-            text = stringResource(R.string.available_drivers),
-            style = MaterialTheme.typography.titleLarge.copy(
-                fontSize = 18.sp
-            ),
-            modifier = Modifier.padding(start = 24.dp, end = 16.dp)
-        )
+                .fillMaxSize()
+                .systemBarsPadding()
+        ) {
+            Spacer(modifier = Modifier.padding(8.dp))
+            Text(
+                text =  stringResource(R.string.ride_route),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(start = 16.dp, end = 16.dp)
+            )
+            Spacer(modifier = Modifier.padding(12.dp))
+            StaticMap(
+                mapRes = "640x360",
+                encodedPolyline = ridePolyline,
+                startLatLng = startLatLng,
+                endLatLng = endLatLng,
+                apiKey = BuildConfig.gMapsApiKey
+            )
+            Spacer(modifier = Modifier.padding(8.dp))
+            Text(
+                text = stringResource(R.string.available_drivers),
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontSize = 18.sp
+                ),
+                modifier = Modifier.padding(start = 24.dp, end = 16.dp)
+            )
 
-        // Exibe a lista de motoristas disponíveis. Quando o usuário clica no botão
-        // "Confirmar" a função confirmRide é chamada.
-        DriverList(
-            rideDetails = rideDetails,
-            onRideConfirmation = { option ->
-                viewModel.confirmRide(
-                    userId = viewModel.customerId,
-                    destination = viewModel.destinationAddress,
-                    distance = rideDetails.distance,
-                    driverId = option.id,
-                    driverName = option.name,
-                    duration = rideDetails.duration,
-                    origin = viewModel.originAddress,
-                    value = option.value
-                )
+            // Exibe a lista de motoristas disponíveis. Quando o usuário clica no botão
+            // "Confirmar" a função confirmRide é chamada.
+            DriverList(
+                rideDetails = rideDetails,
+                onRideConfirmation = { option ->
+                    viewModel.confirmRide(
+                        userId = viewModel.customerId,
+                        destination = viewModel.destinationAddress,
+                        distance = rideDetails.distance,
+                        driverId = option.id,
+                        driverName = option.name,
+                        duration = rideDetails.duration,
+                        origin = viewModel.originAddress,
+                        value = option.value
+                    )
+                }
+            )
+
+        }
+        // Mostra um CircularProgressIndicator durante a confirmação da corrida.
+        when (confirmationState) {
+            is RideConfirmationState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    CircularProgressIndicator()
+                }
             }
-        )
-
+            else -> {}
+        }
     }
 }
 
