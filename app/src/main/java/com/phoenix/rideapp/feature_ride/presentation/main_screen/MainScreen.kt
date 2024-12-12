@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -85,24 +86,22 @@ fun MainScreen(
         }
     }
 
-    Column (
-        modifier = Modifier
-            .systemBarsPadding(),
+    Column(
+        modifier = Modifier.systemBarsPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = R.drawable.rideapp_logo),
-            contentDescription = "Logomarca do aplicativo",
-            modifier = Modifier
-                .height(142.dp)
+            contentDescription = stringResource(R.string.app_logo_description),
+            modifier = Modifier.height(142.dp)
         )
         Text(
-            text = "Olá, passageiro!",
+            text = stringResource(R.string.greeting_title),
             modifier = Modifier.padding(horizontal = 32.dp),
             style = MaterialTheme.typography.headlineLarge
         )
         Text(
-            text = "Insira os dados para solicitar uma viagem.",
+            text = stringResource(R.string.greeting_subtitle),
             modifier = Modifier.padding(horizontal = 32.dp),
             style = MaterialTheme.typography.bodyMedium
         )
@@ -120,7 +119,7 @@ fun MainScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                    text = "Dados da viagem",
+                    text = stringResource(R.string.ride_data),
                     modifier = Modifier.padding(horizontal = 24.dp),
                     style = MaterialTheme.typography.titleMedium
                 )
@@ -129,13 +128,12 @@ fun MainScreen(
                 OutlinedTextField(
                     value = userId,
                     onValueChange = { userId = it },
-                    label = { Text("ID de usuário") },
+                    label = { Text(stringResource(R.string.user_id)) },
                     leadingIcon = { if(isUserIdFocused.value) {
-                        Icon(Icons.Filled.Person, contentDescription = "ID de usuário")
+                        Icon(Icons.Filled.Person, contentDescription = stringResource(R.string.user_id))
                     } else {
-                        Icon(Icons.Outlined.Person, contentDescription = "ID de usuário")
-                    }
-                    },
+                        Icon(Icons.Outlined.Person, contentDescription = stringResource(R.string.user_id))
+                    }},
                     shape = RoundedCornerShape(32.dp),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -150,13 +148,12 @@ fun MainScreen(
                 OutlinedTextField(
                     value = originAddress,
                     onValueChange = { originAddress = it },
-                    label = { Text("Endereço de origem") },
+                    label = { Text(stringResource(R.string.origin_address)) },
                     leadingIcon = { if(isOriginAddressFocused.value) {
-                        Icon(Icons.Filled.Home, contentDescription = "Endereço de origem")
+                        Icon(Icons.Filled.Home, contentDescription = stringResource(R.string.origin_address))
                     } else {
-                        Icon(Icons.Outlined.Home, contentDescription = "Endereço de origem")
-                    }
-                    },
+                        Icon(Icons.Outlined.Home, contentDescription = stringResource(R.string.origin_address))
+                    }},
                     shape = RoundedCornerShape(32.dp),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -171,13 +168,12 @@ fun MainScreen(
                 OutlinedTextField(
                     value = destinationAddress,
                     onValueChange = { destinationAddress = it },
-                    label = { Text("Endereço do destino") },
+                    label = { Text(stringResource(R.string.destination_address)) },
                     leadingIcon = { if(isDestinationAddressFocused.value) {
-                        Icon(Icons.Filled.LocationOn, contentDescription = "Endereço do destino")
-                    }  else {
-                        Icon(Icons.Outlined.LocationOn, contentDescription = "Endereço do destino")
-                    }
-                    },
+                        Icon(Icons.Filled.LocationOn, contentDescription = stringResource(R.string.destination_address))
+                    } else {
+                        Icon(Icons.Outlined.LocationOn, contentDescription = stringResource(R.string.destination_address))
+                    }},
                     shape = RoundedCornerShape(32.dp),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -201,7 +197,7 @@ fun MainScreen(
                         .padding(horizontal = 16.dp)
 
                 ) {
-                    Text("Solicitar viagem")
+                    Text(stringResource(R.string.request_ride))
                 }
                 Spacer(modifier = Modifier.height(24.dp))
             }

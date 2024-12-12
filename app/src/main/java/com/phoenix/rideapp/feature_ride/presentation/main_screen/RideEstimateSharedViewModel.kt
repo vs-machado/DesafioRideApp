@@ -1,7 +1,9 @@
 package com.phoenix.rideapp.feature_ride.presentation.main_screen
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.phoenix.rideapp.R
 import com.phoenix.rideapp.feature_ride.data.repository.RideApiRepositoryImpl
 import com.phoenix.rideapp.feature_ride.domain.model.common.Driver
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.ConfirmRideResponse
@@ -10,6 +12,7 @@ import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
 import com.phoenix.rideapp.feature_ride.presentation.ride_history_screen.RideHistoryScreen
 import com.phoenix.rideapp.feature_ride.presentation.ride_prices_screen.RidePricesScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +26,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class RideEstimateSharedViewModel @Inject constructor(
-    private val rideApiRepository: RideApiRepository
+    private val rideApiRepository: RideApiRepository,
+    @ApplicationContext private val context: Context
 ): ViewModel() {
 
     // Estado que gerencia o fetching do cálculo dos preços da viagem
@@ -89,12 +93,12 @@ class RideEstimateSharedViewModel @Inject constructor(
                         _priceCalculationState.value = PriceCalculationState.Success(rideEstimate)
                     } else {
                         _priceCalculationState.value = PriceCalculationState.Error(
-                            rideEstimate.exceptionOrNull()?.message ?: "Um erro desconhecido ocorreu. Reinicie o aplicativo."
+                            rideEstimate.exceptionOrNull()?.message ?:  context.getString(R.string.error_unknown)
                         )
                     }
                 },
                 onFailure = { exception ->
-                    _priceCalculationState.value = PriceCalculationState.Error(exception.message ?: "Falha ao solicitar viagem.")
+                    _priceCalculationState.value = PriceCalculationState.Error(exception.message ?: context.getString(R.string.error_ride_confirmation_failed))
                 }
             )
         }
@@ -139,12 +143,12 @@ class RideEstimateSharedViewModel @Inject constructor(
                         _rideConfirmationState.value = RideConfirmationState.Success(confirmRideResponse)
                     } else {
                         _rideConfirmationState.value = RideConfirmationState.Error(
-                            confirmRideResponse.exceptionOrNull()?.message ?: "Um erro desconhecido ocorreu. Reinicie o aplicativo."
+                            confirmRideResponse.exceptionOrNull()?.message ?: context.getString(R.string.error_unknown)
                         )
                     }
                 },
                 onFailure = { exception ->
-                    _rideConfirmationState.value = RideConfirmationState.Error(exception.message ?: "Falha ao confirmar viagem.")
+                    _rideConfirmationState.value = RideConfirmationState.Error(exception.message ?: context.getString(R.string.error_ride_confirmation_failed))
                 }
             )
         }
@@ -200,10 +204,10 @@ class RideEstimateSharedViewModel @Inject constructor(
     // retornando uma mensagem de erro correspondente.
     private fun validateInputs(userId: String, origin: String, destination: String): String? {
         return when {
-            origin.isBlank() -> "O endereço de origem não foi preenchido. Preencha o endereço e tente novamente."
-            destination.isBlank() -> "O endereço de destino não foi preenchido. Preencha o endereço e tente novamente."
-            userId.isBlank() -> "O ID de usuário não foi preenchido. Preencha o ID e tente novamente."
-            origin == destination -> "Os endereços de destino de origem e destino não podem ser iguais. Preencha os endereços corretamente e tente novamente."
+            origin.isBlank() -> context.getString(R.string.error_empty_origin)
+            destination.isBlank() -> context.getString(R.string.error_empty_destination)
+            userId.isBlank() -> context.getString(R.string.error_empty_user_id)
+            origin == destination ->  context.getString(R.string.error_same_addresses)
             else -> null
         }
     }
