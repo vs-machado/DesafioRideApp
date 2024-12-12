@@ -27,8 +27,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.phoenix.rideapp.R
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Option
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
 import com.phoenix.rideapp.feature_ride.domain.util.debounceHandler
@@ -98,7 +100,7 @@ private fun CardContent(
                     "James Bond" -> "https://pics.craiyon.com/2023-09-28/66d90406deee446f9604d850aa1c7f39.webp"
                     else -> "https://cdn-icons-png.flaticon.com/512/6522/6522516.png"
                 },
-                contentDescription = "Foto do motorista",
+                contentDescription = stringResource(R.string.driver_photo),
                 modifier = Modifier
                     .size(60.dp)
                     .clip(CircleShape)
@@ -115,7 +117,7 @@ private fun CardContent(
                 ) {
                     Icon(
                         imageVector = Icons.Default.DirectionsCar,
-                        contentDescription = "Ícone de carro",
+                        contentDescription = stringResource(R.string.car_icon),
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
@@ -129,11 +131,11 @@ private fun CardContent(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Star,
-                        contentDescription = "Ícone de estrela",
+                        contentDescription = stringResource(R.string.star_icon),
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
-                        text = "Avaliação: ${option.review.rating}/5",
+                        text = stringResource(R.string.driver_rating, option.review.rating),
                         style = MaterialTheme.typography.labelMedium
                     )
                 }
@@ -150,7 +152,7 @@ private fun CardContent(
 
         // Preço da viagem
         Text(
-            text = "Preço: $${option.value}",
+            text = stringResource(R.string.ride_price, option.value),
             style = MaterialTheme.typography.bodyMedium
         )
         Spacer(modifier = Modifier.height(4.dp))
@@ -162,7 +164,7 @@ private fun CardContent(
             modifier = Modifier.align(Alignment.End)
         ) {
             Text(
-                text = "Escolher",
+                text = stringResource(R.string.choose_driver),
                 color = Color.DarkGray
             )
         }

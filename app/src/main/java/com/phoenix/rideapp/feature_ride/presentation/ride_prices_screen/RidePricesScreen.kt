@@ -21,12 +21,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.phoenix.rideapp.BuildConfig
+import com.phoenix.rideapp.R
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.LatLng
 import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideConfirmationState
 import com.phoenix.rideapp.feature_ride.presentation.main_screen.RideEstimateSharedViewModel
@@ -75,7 +77,7 @@ fun RidePricesScreen(
                     isShowingToast = true
                     Toast.makeText(
                         context,
-                        "Viagem confirmada com sucesso!",
+                        context.getString(R.string.ride_confirmed_success),
                         Toast.LENGTH_SHORT
                     ).show()
                     delay(2000)
@@ -108,7 +110,7 @@ fun RidePricesScreen(
     ) {
         Spacer(modifier = Modifier.padding(8.dp))
         Text(
-            text = "Percurso da viagem",
+            text =  stringResource(R.string.ride_route),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(start = 16.dp, end = 16.dp)
@@ -123,7 +125,7 @@ fun RidePricesScreen(
         )
         Spacer(modifier = Modifier.padding(8.dp))
         Text(
-            text = "Motoristas disponíveis:",
+            text = stringResource(R.string.available_drivers),
             style = MaterialTheme.typography.titleLarge.copy(
                 fontSize = 18.sp
             ),
@@ -180,7 +182,7 @@ fun StaticMap(
     ) {
         AsyncImage(
             model = mapUrl,
-            contentDescription = "Mapa do percurso",
+            contentDescription = stringResource(R.string.route_map_description),
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                 .fillMaxWidth()

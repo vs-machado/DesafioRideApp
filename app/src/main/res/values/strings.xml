@@ -23,6 +23,16 @@
     <string name="ride_value">Valor da corrida: $%.2f</string>
     <string name="ride_distance">Distância percorrida: %.2f km</string>
     <string name="ride_duration">Duração da corrida: %s</string>
+    <string name="ride_route">Percurso da viagem</string>
+    <string name="available_drivers">Motoristas disponíveis:</string>
+    <string name="ride_confirmed_success">Viagem confirmada com sucesso!</string>
+    <string name="route_map_description">Mapa do percurso</string>
+    <string name="driver_photo">Foto do motorista</string>
+    <string name="car_icon">Ícone de carro</string>
+    <string name="star_icon">Ícone de estrela</string>
+    <string name="driver_rating">Avaliação: %1$s/5</string>
+    <string name="ride_price">Preço: $%1$s</string>
+    <string name="choose_driver">Escolher</string>
 
     <!-- Mensagens de erro da RideEstimateSharedViewModel -->
     <string name="error_unknown">Um erro desconhecido ocorreu. Reinicie o aplicativo.</string>
