@@ -106,7 +106,6 @@ fun RidePricesScreen(
         modifier = Modifier
             .fillMaxSize()
             .systemBarsPadding()
-            .padding(bottom = 16.dp)
     ) {
         Spacer(modifier = Modifier.padding(8.dp))
         Text(
