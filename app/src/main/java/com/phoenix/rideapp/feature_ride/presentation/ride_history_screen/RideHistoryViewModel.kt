@@ -13,6 +13,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Classe responsável por realizar o fetching do histórico de corridas
+ *
+ * @property rideApiRepository Repositório da API
+ * @property locationHelper Fornece as strings para o viewmodel
+ */
 @HiltViewModel
 class RideHistoryViewModel @Inject constructor(
     private val rideApiRepository: RideApiRepository,

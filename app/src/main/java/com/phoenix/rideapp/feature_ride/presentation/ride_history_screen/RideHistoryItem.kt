@@ -30,6 +30,11 @@ import com.phoenix.rideapp.R
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Ride
 import com.phoenix.rideapp.feature_ride.domain.util.parseDateTime
 
+/**
+ * Layout do card que contém os dados de uma corrida realizada.
+ *
+ * @param ride Dados da corrida realizada
+ */
 @Composable
 fun RideHistoryItem(
     ride: Ride

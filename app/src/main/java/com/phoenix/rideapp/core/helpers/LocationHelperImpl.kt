@@ -5,6 +5,11 @@ import com.phoenix.rideapp.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
+/**
+ * Classe que fornece as strings para os viewmodels e implementações de classe
+ *
+ * @property context Contexto da aplicação
+ */
 class LocationHelperImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ): LocationHelper {

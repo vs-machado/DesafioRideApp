@@ -34,8 +34,14 @@ import com.phoenix.rideapp.R
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Option
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.RideEstimate
 import com.phoenix.rideapp.feature_ride.domain.util.debounceHandler
+import com.phoenix.rideapp.feature_ride.presentation.ride_history_screen.RideHistoryScreen
 
-// LazyColumn que exibe a lista de motoristas disponíveis para a viagem.
+/**
+ * LazyColumn que exibe a lista de motoristas disponíveis para a corrida.
+ *
+ * @param rideDetails Informações dos motoristas disponíveis para a corrida
+ * @param onRideConfirmation Navega para a [RideHistoryScreen]
+ */
 @Composable
 fun DriverList(
     rideDetails: RideEstimate,

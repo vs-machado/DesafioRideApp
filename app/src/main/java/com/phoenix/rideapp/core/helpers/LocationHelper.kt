@@ -1,5 +1,8 @@
 package com.phoenix.rideapp.core.helpers
 
+/**
+ * Interface que fornece as strings para os viewmodels e implementações de classe
+ */
 interface LocationHelper {
     fun getErrorEmptyOrigin(): String
     fun getErrorEmptyDestination(): String

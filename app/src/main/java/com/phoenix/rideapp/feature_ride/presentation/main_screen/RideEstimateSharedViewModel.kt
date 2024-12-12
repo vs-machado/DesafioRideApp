@@ -19,8 +19,10 @@ import javax.inject.Inject
 
 /**
  * ViewModel que gerencia a MainScreen e RidePricesScreen.
- * Realiza o fetching dos preços da viagem e gerencia o estado da tela.
+ * Realiza o fetching dos preços da corrida, a confirmação da corrida e gerencia o estado da tela.
+ *
  * @property rideApiRepository Repositório que acessa a API de serviços de corrida
+ * @property locationHelper Fornece as strings para o viewmodel
  */
 @HiltViewModel
 class RideEstimateSharedViewModel @Inject constructor(
@@ -136,7 +138,9 @@ class RideEstimateSharedViewModel @Inject constructor(
                 )
             }.fold(
                 onSuccess = { confirmRideResponse ->
+                    // Salva o id do motorista para ser utilizado na RideHistoryScreen
                     saveSelectedDriver(driverId)
+
                     if(confirmRideResponse.isSuccess) {
                         _rideConfirmationState.value = RideConfirmationState.Success(confirmRideResponse)
                     } else {
