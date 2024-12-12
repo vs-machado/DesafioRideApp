@@ -17,6 +17,12 @@
     <string name="check_rides">Consultar corridas realizadas</string>
     <string name="error_empty_user_id_field">O campo ID de usuário deve ser preenchido.</string>
     <string name="no_rides_found">Nenhuma corrida encontrada para o respectivo motorista.</string>
+    <string name="driver_photo_content_description">Foto do motorista</string>
+    <string name="origin_point_content_description">Ponto de origem</string>
+    <string name="destination_point_content_description">Ponto de destino</string>
+    <string name="ride_value">Valor da corrida: $%.2f</string>
+    <string name="ride_distance">Distância percorrida: %.2f km</string>
+    <string name="ride_duration">Duração da corrida: %s</string>
 
     <!-- Mensagens de erro da RideEstimateSharedViewModel -->
     <string name="error_unknown">Um erro desconhecido ocorreu. Reinicie o aplicativo.</string>

@@ -22,9 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.phoenix.rideapp.R
 import com.phoenix.rideapp.feature_ride.domain.model.ride_api.Ride
 import com.phoenix.rideapp.feature_ride.domain.util.parseDateTime
 
@@ -65,7 +67,7 @@ fun RideHistoryItem(
                             "James Bond" -> "https://pics.craiyon.com/2023-09-28/66d90406deee446f9604d850aa1c7f39.webp"
                             else -> "https://cdn-icons-png.flaticon.com/512/6522/6522516.png"
                         },
-                        contentDescription = "Foto do motorista",
+                        contentDescription = stringResource(R.string.driver_photo_content_description),
                         modifier = Modifier
                             .size(60.dp)
                             .clip(CircleShape)
@@ -82,7 +84,7 @@ fun RideHistoryItem(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.House,
-                                contentDescription = "Ponto de origem",
+                                contentDescription = stringResource(R.string.origin_point_content_description),
                                 modifier = Modifier.size(16.dp)
                             )
                             Text(
@@ -97,7 +99,7 @@ fun RideHistoryItem(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.LocationOn,
-                                contentDescription = "Ponto de destino",
+                                contentDescription = stringResource(R.string.destination_point_content_description),
                                 modifier = Modifier.size(16.dp)
                             )
                             Text(
@@ -111,19 +113,19 @@ fun RideHistoryItem(
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Valor da corrida: $%.2f".format(ride.value),
+                    text = stringResource(R.string.ride_value, ride.value),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                 )
                 Text(
-                    text = "Distância percorrida: %.2f km".format(ride.distance),
+                    text = stringResource(R.string.ride_distance, ride.distance),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                 )
                 Text(
-                    text = "Duração da corrida: ${ride.duration}",
+                    text = stringResource(R.string.ride_duration, ride.duration),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
